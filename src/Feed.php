@@ -662,9 +662,9 @@ abstract class Feed
             $this->data['Image'] = $data;
 
             return $this->setChannelElement($name, '', ['rdf:resource' => $url], false);
-        } else {
-            return $this->setChannelElement($name, $data);
         }
+
+        return $this->setChannelElement($name, $data);
     }
 
     /**
@@ -823,9 +823,9 @@ abstract class Feed
             if (!isset($this->namespaces[$prefix])) {
                 throw new InvalidOperationException('Unknown XML namespace prefix: \'' . $prefix . '\'.'
                     . ' Use the addNamespace method to add support for this prefix.');
-            } else {
-                $attributes['xmlns:' . $prefix] = $this->namespaces[$prefix];
             }
+
+            $attributes['xmlns:' . $prefix] = $this->namespaces[$prefix];
         }
 
         // Include default namepsace, if required
