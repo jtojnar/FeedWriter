@@ -144,10 +144,10 @@ abstract class Feed
     *
     * See RFC 5005, chapter 3. At least one page URL must be specified.
     *
-    * @param   string $nextURL The URL to the next page of this feed. Optional.
-    * @param   string $previousURL The URL to the previous page of this feed. Optional.
-    * @param   string $firstURL The URL to the first page of this feed. Optional.
-    * @param   string $lastURL The URL to the last page of this feed. Optional.
+    * @param   ?string $nextURL The URL to the next page of this feed. Optional.
+    * @param   ?string $previousURL The URL to the previous page of this feed. Optional.
+    * @param   ?string $firstURL The URL to the first page of this feed. Optional.
+    * @param   ?string $lastURL The URL to the last page of this feed. Optional.
     * @link    http://tools.ietf.org/html/rfc5005#section-3
     * @return  self
     * @throws  \LogicException if none of the parameters are set.
@@ -532,12 +532,12 @@ abstract class Feed
     * type and hreflang values.
     *
     * @access   public
-    * @param    string $href     URI of this link
-    * @param    string $rel      relation type of the resource
-    * @param    string $type     MIME type of the target resource
-    * @param    string $hreflang language of the resource
-    * @param    string $title    human-readable information about the resource
-    * @param    int    $length   length of the resource in bytes
+    * @param    ?string $href     URI of this link
+    * @param    ?string $rel      relation type of the resource
+    * @param    ?string $type     MIME type of the target resource
+    * @param    ?string $hreflang language of the resource
+    * @param    ?string $title    human-readable information about the resource
+    * @param    ?int    $length   length of the resource in bytes
     * @link     https://www.iana.org/assignments/link-relations/link-relations.xml
     * @link     https://tools.ietf.org/html/rfc4287#section-4.2.7
     * @return   self
@@ -621,8 +621,8 @@ abstract class Feed
     *
     * @access   public
     * @param    string $url URL of the image
-    * @param    string $title Title of the image. RSS only.
-    * @param    string $link Link target URL of the image. RSS only.
+    * @param    ?string $title Title of the image. RSS only.
+    * @param    ?string $link Link target URL of the image. RSS only.
     * @return   self
     * @throws   \InvalidArgumentException if the url is invalid.
     * @throws   \InvalidArgumentException if the title and link parameter are not a string or empty.
@@ -690,7 +690,7 @@ abstract class Feed
     *
     * @author   Anis uddin Ahmad <admin@ajaxray.com>
     * @access   public
-    * @param    string $key    optional key on which the UUID is generated
+    * @param    ?string $key    optional key on which the UUID is generated
     * @param    string $prefix an optional prefix
     * @return   string         the formatted UUID
     */
@@ -850,7 +850,7 @@ abstract class Feed
     * @access   private
     * @param    string $tagName    name of the tag
     * @param    TagContentFix $tagContent tag value as string or array of nested tags in 'tagName' => 'tagValue' format
-    * @param    array<string, string> $attributes Attributes (if any) in 'attrName' => 'attrValue' format
+    * @param    ?array<string, string> $attributes Attributes (if any) in 'attrName' => 'attrValue' format
     * @param    bool $omitEndTag True if the end tag should be omitted. Defaults to false.
     * @return   string  formatted xml tag
     * @throws   \InvalidArgumentException if the tagContent is not an array and not a string.
