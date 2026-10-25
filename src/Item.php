@@ -146,8 +146,7 @@ class Item
     public function getElements()
     {
         // ATOM feeds have some specific requirements...
-        if ($this->version == Feed::ATOM)
-        {
+        if ($this->version == Feed::ATOM) {
             // Add an 'id' element, if it was not added by calling the setLink method.
             // Use the value of the title element as key, since no link element was specified.
             if (!array_key_exists('id', $this->elements))
@@ -158,8 +157,7 @@ class Item
                 throw new InvalidOperationException('ATOM feed entries need a link or a content element. Call the setLink or setContent method.');
         }
         // ...same with RSS1 feeds.
-        else if ($this->version == Feed::RSS1)
-        {
+        else if ($this->version == Feed::RSS1) {
             if (!array_key_exists('title', $this->elements))
                 throw new InvalidOperationException('RSS1 feed entries need a title element. Call the setTitle method.');
             if (!array_key_exists('link', $this->elements))
@@ -345,15 +343,12 @@ class Item
         if ($email != null && preg_match('/.+@.+/', $email) != 1)
             throw new \InvalidArgumentException('The email address is syntactically incorrect.');
 
-        if ($this->version == Feed::RSS2)
-        {
+        if ($this->version == Feed::RSS2) {
             if ($email != null)
                 $author = $email . ' (' . $author . ')';
 
             $this->addElement('author', $author);
-        }
-        else
-        {
+        } else {
             $elements = ['name' => $author];
 
             if ($email != null)
@@ -397,8 +392,7 @@ class Item
             $checkId = strtolower($id);
 
             foreach($validSchemes as $scheme)
-                if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== FALSE)
-                {
+                if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== FALSE) {
                     $found = TRUE;
                     break;
                 }

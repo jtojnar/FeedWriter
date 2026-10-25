@@ -376,8 +376,7 @@ abstract class Feed
     */
     public function addItem(Item $feedItem)
     {
-        if ($feedItem->getVersion() != $this->version)
-        {
+        if ($feedItem->getVersion() != $this->version) {
             $msg = sprintf('Feed type mismatch: This instance can handle %s feeds only, but item for %s feeds given.', $this->version, $feedItem->getVersion());
             throw new \InvalidArgumentException($msg);
         }
@@ -449,15 +448,13 @@ abstract class Feed
             $date = $date->format($format);
         else if(is_numeric($date) && $date >= 0)
             $date = date($format, $date);
-        else if (is_string($date))
-        {
+        else if (is_string($date)) {
             $timestamp = strtotime($date);
             if ($timestamp === FALSE)
                 throw new \InvalidArgumentException('The given date was not parseable.');
 
             $date = date($format, $timestamp);
-        }
-        else
+        } else
             throw new \InvalidArgumentException('The given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.');
 
         if ($this->version == Feed::ATOM)
@@ -613,8 +610,7 @@ abstract class Feed
             throw new \InvalidArgumentException('url parameter must be a string and may not be empty or NULL.');
 
         // RSS feeds have support for a title & link element.
-        if ($this->version != Feed::ATOM)
-        {
+        if ($this->version != Feed::ATOM) {
             if (!is_string($title) || empty($title))
                 throw new \InvalidArgumentException('title parameter must be a string and may not be empty or NULL.');
             if (!is_string($link) || empty($link))
@@ -622,20 +618,16 @@ abstract class Feed
 
             $data = ['title'=>$title, 'link'=>$link, 'url'=>$url];
             $name = 'image';
-        }
-        else
-        {
+        } else {
             $name = 'logo';
             $data = $url;
         }
 
         // Special handling for RSS1 again (since RSS1 is a bit strange...)
-        if ($this->version == Feed::RSS1)
-        {
+        if ($this->version == Feed::RSS1) {
             $this->data['Image'] = $data;
             return $this->setChannelElement($name, '', ['rdf:resource' => $url], false);
-        }
-        else
+        } else
             return $this->setChannelElement($name, $data);
     }
 
