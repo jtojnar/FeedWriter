@@ -7,12 +7,7 @@
 namespace FeedWriter;
 
 /**
- * Universal Feed Writer
- *
- * Item class - Used as feed element in Feed class
- *
- * @author          Anis uddin Ahmad <anisniit@gmail.com>
- * @link            http://www.ajaxray.com/projects/rss
+ * Used as feed element in Feed class
  *
  * @_phpstan-recursive-type TagContent string|array<TagContent>|array<string, TagContent>
  * @phpstan-type TagContentFix0 string

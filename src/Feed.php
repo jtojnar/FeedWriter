@@ -11,9 +11,6 @@ namespace FeedWriter;
  *
  * Generate RSS 1.0, RSS2.0 and ATOM Feeds
  *
- * @author      Anis uddin Ahmad <anisniit@gmail.com>
- * @link        http://www.ajaxray.com/projects/rss
- *
  * PHPStan does not support recursive type aliases
  * https://github.com/phpstan/phpstan/issues/4637
  * so we are manually approximating the fixed point
