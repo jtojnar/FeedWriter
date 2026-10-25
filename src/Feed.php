@@ -602,8 +602,7 @@ abstract class Feed
                     $attrib = $linkItem['attributes'];
                     // Only one link with relation alternate and same hreflang & type is allowed.
                     if (@$attrib['rel'] == 'alternate' && @$attrib['hreflang'] == $hreflang && @$attrib['type'] == $type) {
-                        throw new InvalidOperationException('The feed must not contain more than one link element with a'
-                        . ' relation of "alternate" that has the same combination of type and hreflang attribute values.');
+                        throw new InvalidOperationException('The feed must not contain more than one link element with a relation of "alternate" that has the same combination of type and hreflang attribute values.');
                     }
                 }
             }
@@ -821,8 +820,7 @@ abstract class Feed
         // Iterate through every namespace prefix and add it to the element attributes.
         foreach ($prefixes as $prefix) {
             if (!isset($this->namespaces[$prefix])) {
-                throw new InvalidOperationException('Unknown XML namespace prefix: \'' . $prefix . '\'.'
-                    . ' Use the addNamespace method to add support for this prefix.');
+                throw new InvalidOperationException('Unknown XML namespace prefix: \'' . $prefix . '\'. Use the addNamespace method to add support for this prefix.');
             }
 
             $attributes['xmlns:' . $prefix] = $this->namespaces[$prefix];
