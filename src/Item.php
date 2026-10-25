@@ -2,9 +2,6 @@
 
 namespace FeedWriter;
 
-use DateTime;
-use DateTimeInterface;
-
 /*
  * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>
  * Copyright (C) 2010-2013, 2015-2016 Michael Bemmerl <mail@mx-server.de>
@@ -235,14 +232,14 @@ class Item
     * DateTimeInterface, an integer containing a UNIX timestamp or a string
     * which is parseable by PHP's 'strtotime' function.
     *
-    * @param    DateTimeInterface|int|string $date Date which should be used.
+    * @param    \DateTimeInterface|int|string $date Date which should be used.
     * @return   self
     * @throws   \InvalidArgumentException if the given date was not parseable.
     */
     public function setDate($date)
     {
         if (!is_numeric($date)) {
-            if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
+            if ($date instanceof \DateTime || $date instanceof \DateTimeInterface) {
                 $date = $date->getTimestamp();
             } else {
                 $date = strtotime($date);

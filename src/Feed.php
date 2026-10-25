@@ -2,9 +2,6 @@
 
 namespace FeedWriter;
 
-use DateTime;
-use DateTimeInterface;
-
 /*
  * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>
  * Copyright (C) 2010-2016, 2022 Michael Bemmerl <mail@mx-server.de>
@@ -450,7 +447,7 @@ abstract class Feed
     *
     * Not supported in RSS1 feeds.
     *
-    * @param    DateTimeInterface|int|string $date  Date which should be used.
+    * @param    \DateTimeInterface|int|string $date  Date which should be used.
     * @return   self
     * @throws   \InvalidArgumentException if the given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.
     * @throws   InvalidOperationException if this method is called on an RSS1 feed.
@@ -464,7 +461,7 @@ abstract class Feed
         // The feeds have different date formats.
         $format = $this->version == Feed::ATOM ? \DATE_ATOM : \DATE_RSS;
 
-        if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
+        if ($date instanceof \DateTime || $date instanceof \DateTimeInterface) {
             $date = $date->format($format);
         } elseif (is_numeric($date) && $date >= 0) {
             $date = date($format, $date);

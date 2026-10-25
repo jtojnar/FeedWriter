@@ -2,8 +2,6 @@
 
 namespace FeedWriter;
 
-use LogicException;
-
 /*
  * Copyright (C) 2016 Michael Bemmerl <mail@mx-server.de>
  *
@@ -27,6 +25,6 @@ use LogicException;
  * The exception that is thrown when an invalid operation is performed on
  * the object.
  */
-class InvalidOperationException extends LogicException
+class InvalidOperationException extends \LogicException
 {
 }
