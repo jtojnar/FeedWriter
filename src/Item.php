@@ -158,7 +158,7 @@ class Item
     /**
      * Return the type of this feed item.
      *
-     * @return string The feed type, as defined in Feed.php
+     * @return Feed::RSS1|Feed::RSS2|Feed::ATOM
      */
     public function getVersion()
     {
