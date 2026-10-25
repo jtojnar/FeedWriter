@@ -25,12 +25,17 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
         with:
+          tools: cs2pr
           php-version: "${{ matrix.php }}"
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v3"
+
+      - name: "Check coding style"
+        run: "php vendor/bin/php-cs-fixer fix --verbose --dry-run --format=checkstyle | cs2pr"
+
 
       - name: "Run PHPStan"
         run: "vendor/bin/phpstan analyse --no-progress --error-format=github"
