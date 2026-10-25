@@ -60,7 +60,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "FeedWriter\\": ""
+            "FeedWriter\\": "src/"
         }
     },
     "require" : {
