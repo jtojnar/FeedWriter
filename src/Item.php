@@ -157,7 +157,7 @@ class Item
                 throw new InvalidOperationException('ATOM feed entries need a link or a content element. Call the setLink or setContent method.');
         }
         // ...same with RSS1 feeds.
-        else if ($this->version == Feed::RSS1) {
+        elseif ($this->version == Feed::RSS1) {
             if (!array_key_exists('title', $this->elements))
                 throw new InvalidOperationException('RSS1 feed entries need a title element. Call the setTitle method.');
             if (!array_key_exists('link', $this->elements))

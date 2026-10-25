@@ -181,7 +181,7 @@ abstract class Feed
     {
         if ($this->version == Feed::ATOM)
             $this->setChannelElement('atom:generator', 'FeedWriter', ['uri' => 'https://github.com/mibe/FeedWriter']);
-        else if ($this->version == Feed::RSS2)
+        elseif ($this->version == Feed::RSS2)
             $this->setChannelElement('generator', 'FeedWriter');
         else
             throw new InvalidOperationException('The generator element is not supported in RSS1 feeds.');
@@ -446,9 +446,9 @@ abstract class Feed
 
         if ($date instanceof DateTime || $date instanceof DateTimeInterface)
             $date = $date->format($format);
-        else if(is_numeric($date) && $date >= 0)
+        elseif(is_numeric($date) && $date >= 0)
             $date = date($format, $date);
-        else if (is_string($date)) {
+        elseif (is_string($date)) {
             $timestamp = strtotime($date);
             if ($timestamp === FALSE)
                 throw new \InvalidArgumentException('The given date was not parseable.');
@@ -847,7 +847,7 @@ abstract class Feed
                     foreach ($value as $subValue) {
                         $nodeText .= $this->makeNode($key, $subValue);
                     }
-                } else if (is_string($value)) {
+                } elseif (is_string($value)) {
                     $nodeText .= $this->makeNode($key, $value);
                 } else {
                     throw new \InvalidArgumentException("Unknown node-value type for $key");
@@ -913,7 +913,7 @@ abstract class Feed
             // An image has its own element after the channel elements.
             if (array_key_exists('Image', $this->data))
                 $out .= $this->makeNode('image', $this->data['Image'], ['rdf:about' => $this->data['Image']['url']]);
-        } else if ($this->version == Feed::ATOM) {
+        } elseif ($this->version == Feed::ATOM) {
             // ATOM feeds have a unique feed ID. Use the title channel element as key.
             $out .= $this->makeNode('id', Feed::uuid($this->channels['title'][0]['content'], 'urn:uuid:'));
         }
