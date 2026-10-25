@@ -274,13 +274,13 @@ abstract class Feed
     public function getMIMEType()
     {
         switch ($this->version) {
-            case Feed::RSS2 : $mimeType = "application/rss+xml";
+            case Feed::RSS2 : $mimeType = 'application/rss+xml';
                 break;
-            case Feed::RSS1 : $mimeType = "application/rdf+xml";
+            case Feed::RSS1 : $mimeType = 'application/rdf+xml';
                 break;
-            case Feed::ATOM : $mimeType = "application/atom+xml";
+            case Feed::ATOM : $mimeType = 'application/atom+xml';
                 break;
-            default : $mimeType = "text/xml";
+            default : $mimeType = 'text/xml';
         }
 
         return $mimeType;
@@ -303,7 +303,7 @@ abstract class Feed
             throw new \InvalidArgumentException('The useGenericContentType parameter must be boolean.');
         }
 
-        $contentType = "text/xml";
+        $contentType = 'text/xml';
 
         if (!$useGenericContentType) {
             $contentType = $this->getMIMEType();
@@ -311,7 +311,7 @@ abstract class Feed
 
         // Generate the feed before setting the header, so Exceptions will be nicely visible.
         $feed = $this->generateFeed();
-        header("Content-Type: " . $contentType . "; charset=" . $this->encoding);
+        header('Content-Type: ' . $contentType . '; charset=' . $this->encoding);
         echo $feed;
     }
 
@@ -677,7 +677,7 @@ abstract class Feed
     public function setChannelAbout($url)
     {
         if ($this->version != Feed::RSS1) {
-            throw new InvalidOperationException("This method is only supported in RSS1 feeds.");
+            throw new InvalidOperationException('This method is only supported in RSS1 feeds.');
         }
         if (empty($url)) {
             throw new \InvalidArgumentException('The about URL may not be empty or NULL.');
@@ -947,12 +947,12 @@ abstract class Feed
 
         if ($this->version == Feed::RSS1) {
             //RSS 1.0 have special tag <rdf:Seq> with channel
-            $out .= "<items>" . PHP_EOL . "<rdf:Seq>" . PHP_EOL;
+            $out .= '<items>' . PHP_EOL . '<rdf:Seq>' . PHP_EOL;
             foreach ($this->items as $item) {
                 $thisItems = $item->getElements();
                 $out .= "<rdf:li resource=\"{$thisItems['link']['content']}\"/>" . PHP_EOL;
             }
-            $out .= "</rdf:Seq>" . PHP_EOL . "</items>" . PHP_EOL . "</channel>" . PHP_EOL;
+            $out .= '</rdf:Seq>' . PHP_EOL . '</items>' . PHP_EOL . '</channel>' . PHP_EOL;
 
             // An image has its own element after the channel elements.
             if (array_key_exists('Image', $this->data)) {
@@ -1020,10 +1020,10 @@ abstract class Feed
             if ($about) {
                 $out .= "<item rdf:about=\"$about\">" . PHP_EOL;
             } else {
-                throw new InvalidOperationException("Missing data for about attribute. Call setChannelAbout method.");
+                throw new InvalidOperationException('Missing data for about attribute. Call setChannelAbout method.');
             }
         } elseif ($this->version == Feed::ATOM) {
-            $out .= "<entry>" . PHP_EOL;
+            $out .= '<entry>' . PHP_EOL;
         }
 
         return $out;
@@ -1057,8 +1057,8 @@ abstract class Feed
     */
     private function sanitizeCDATA($text)
     {
-        $text = str_replace("]]>", "]]&gt;", $text);
-        $text = str_replace("<![CDATA[", "&lt;![CDATA[", $text);
+        $text = str_replace(']]>', ']]&gt;', $text);
+        $text = str_replace('<![CDATA[', '&lt;![CDATA[', $text);
 
         return $text;
     }

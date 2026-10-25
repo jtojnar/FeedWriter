@@ -262,7 +262,7 @@ class Item
             $value  = date(\DATE_RSS, $date);
         } else {
             $tag    = 'dc:date';
-            $value  = date("Y-m-d", $date);
+            $value  = date('Y-m-d', $date);
         }
 
         return $this->addElement($tag, $value);
@@ -418,7 +418,7 @@ class Item
             }
 
             if (!$found) {
-                throw new \InvalidArgumentException("The ID must begin with an IANA-registered URI scheme.");
+                throw new \InvalidArgumentException('The ID must begin with an IANA-registered URI scheme.');
             }
 
             $this->addElement('id', $id, [], TRUE);
