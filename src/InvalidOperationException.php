@@ -2,7 +2,7 @@
 
 namespace FeedWriter;
 
-use \LogicException;
+use LogicException;
 
 /*
  * Copyright (C) 2016 Michael Bemmerl <mail@mx-server.de>

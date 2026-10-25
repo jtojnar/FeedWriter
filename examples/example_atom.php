@@ -9,7 +9,7 @@ require_once __DIR__ . '/../src/InvalidOperationException.php';
 
 date_default_timezone_set('UTC');
 
-use \FeedWriter\ATOM;
+use FeedWriter\ATOM;
 
 /*
  * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>

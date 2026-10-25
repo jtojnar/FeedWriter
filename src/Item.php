@@ -2,8 +2,8 @@
 
 namespace FeedWriter;
 
-use \DateTime;
-use \DateTimeInterface;
+use DateTime;
+use DateTimeInterface;
 
 /*
  * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>
