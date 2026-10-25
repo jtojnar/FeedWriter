@@ -194,7 +194,6 @@ abstract class Feed
     * Add a XML namespace to the internal list of namespaces. After that,
     * custom channel elements can be used properly to generate a valid feed.
     *
-    * @access   public
     * @param    string $prefix namespace prefix
     * @param    string $uri namespace name (URI)
     * @return   self
@@ -216,7 +215,6 @@ abstract class Feed
     /**
     * Add a channel element to the feed.
     *
-    * @access   public
     * @param    string $elementName name of the channel tag
     * @param    TagContentFix $content content of the channel tag
     * @param    array<string, string> $attributes array of element attributes with attribute name as array key
@@ -246,7 +244,6 @@ abstract class Feed
     * Set multiple channel elements from an array. Array elements
     * should be 'channelName' => 'channelContent' format.
     *
-    * @access   public
     * @param    array<string, TagContentFix> $elementArray array of channels
     * @return   self
     */
@@ -262,7 +259,6 @@ abstract class Feed
     /**
     * Get the appropriate MIME type string for the current feed.
     *
-    * @access   public
     * @return   string  The MIME type string.
     */
     public function getMIMEType()
@@ -287,7 +283,6 @@ abstract class Feed
     * Should only be used in situations where direct output is desired;
     * if you need to pass a string around, use generateFeed() instead.
     *
-    * @access   public
     * @param    bool $useGenericContentType FALSE if the specific feed media type should be sent.
     * @return   void
     * @throws   \InvalidArgumentException if the useGenericContentType parameter is not boolean.
@@ -312,7 +307,6 @@ abstract class Feed
     /**
     * Generate the feed.
     *
-    * @access   public
     * @return   string  The complete feed XML.
     * @throws   InvalidOperationException if the link element of the feed is not set.
     */
@@ -330,7 +324,6 @@ abstract class Feed
     /**
     * Create a new Item.
     *
-    * @access   public
     * @return   Item  instance of Item class
     */
     public function createNewItem()
@@ -343,7 +336,6 @@ abstract class Feed
     /**
      * Add one or more tags to the list of CDATA encoded tags
      *
-     * @access  public
      * @param   array<string> $tags An array of tag names that are merged into the list of tags which should be encoded as CDATA
      * @return  self
      */
@@ -357,7 +349,6 @@ abstract class Feed
     /**
      * Get list of CDATA encoded properties
      *
-     * @access  public
      * @return  array<string> Return an array of CDATA properties that are to be encoded as CDATA
      */
     public function getCDATAEncoding()
@@ -368,7 +359,6 @@ abstract class Feed
     /**
      * Remove tags from the list of CDATA encoded tags
      *
-     * @access  public
      * @param   array<string> $tags An array of tag names that should be removed.
      * @return  void
      */
@@ -381,7 +371,6 @@ abstract class Feed
     /**
     * Add a FeedItem to the main class
     *
-    * @access   public
     * @param    Item   $feedItem instance of Item class
     * @return   self
     * @throws   \InvalidArgumentException if the given item version mismatches.
@@ -404,7 +393,6 @@ abstract class Feed
     /**
     * Set the 'encoding' attribute in the XML prolog.
     *
-    * @access   public
     * @param    string $encoding value of 'encoding' attribute
     * @return   self
     * @throws   \InvalidArgumentException if the encoding is not a string, empty or NULL.
@@ -424,7 +412,6 @@ abstract class Feed
     /**
     * Set the 'title' channel element
     *
-    * @access   public
     * @param    string $title value of 'title' channel tag
     * @return   self
     * @throws   \InvalidArgumentException if the title is empty or NULL.
@@ -446,7 +433,6 @@ abstract class Feed
     *
     * Not supported in RSS1 feeds.
     *
-    * @access   public
     * @param    DateTimeInterface|int|string $date  Date which should be used.
     * @return   self
     * @throws   \InvalidArgumentException if the given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.
@@ -486,7 +472,6 @@ abstract class Feed
     /**
     * Set a phrase or sentence describing the feed.
     *
-    * @access   public
     * @param    string  $description Description of the feed.
     * @return   self
     * @throws   \InvalidArgumentException if the description is empty or NULL.
@@ -507,7 +492,6 @@ abstract class Feed
     /**
     * Set the 'link' channel element
     *
-    * @access   public
     * @param    string $link value of 'link' channel tag
     * @return   self
     * @throws   \InvalidArgumentException if the link is empty or NULL.
@@ -531,7 +515,6 @@ abstract class Feed
     * In ATOM feeds, only one link with alternate relation and the same combination of
     * type and hreflang values.
     *
-    * @access   public
     * @param    ?string $href     URI of this link
     * @param    ?string $rel      relation type of the resource
     * @param    ?string $type     MIME type of the target resource
@@ -607,7 +590,6 @@ abstract class Feed
     * Needs the full URL to this feed.
     *
     * @link     http://www.rssboard.org/rss-profile#namespace-elements-atom-link
-    * @access   public
     * @param    string $url URL to this feed
     * @return   self
     */
@@ -619,7 +601,6 @@ abstract class Feed
     /**
     * Set the 'image' channel element
     *
-    * @access   public
     * @param    string $url URL of the image
     * @param    ?string $title Title of the image. RSS only.
     * @param    ?string $link Link target URL of the image. RSS only.
@@ -662,7 +643,6 @@ abstract class Feed
     /**
     * Set the channel 'rdf:about' attribute, which is used in RSS1 feeds only.
     *
-    * @access   public
     * @param    string $url value of 'rdf:about' attribute of the channel element
     * @return   self
     * @throws   InvalidOperationException if this method is called and the feed is not of type RSS1.
@@ -689,7 +669,6 @@ abstract class Feed
     * for the MD5 hash is generated.
     *
     * @author   Anis uddin Ahmad <admin@ajaxray.com>
-    * @access   public
     * @param    ?string $key    optional key on which the UUID is generated
     * @param    string $prefix an optional prefix
     * @return   string         the formatted UUID
@@ -714,7 +693,6 @@ abstract class Feed
     * @link http://www.w3.org/TR/REC-xml/#charsets
     * @link https://github.com/mibe/FeedWriter/issues/30
     *
-    * @access   public
     * @param    string $string      string which should be filtered
     * @param    string $replacement replace invalid characters with this string
     * @return   string              the filtered string
@@ -744,7 +722,6 @@ abstract class Feed
     * Unfortunately some namespace prefixes are not included,
     * because they are hardcoded, e.g. rdf.
     *
-    * @access   private
     * @return   array<string> Array with namespace prefix as value.
     */
     private function getNamespacePrefixes()
@@ -779,7 +756,6 @@ abstract class Feed
     /**
     * Returns the XML header and root element, depending on the feed type.
     *
-    * @access   private
     * @return   string  The XML header of the feed.
     * @throws   InvalidOperationException if an unknown XML namespace prefix is encountered.
     */
@@ -830,7 +806,6 @@ abstract class Feed
     /**
     * Closes the open tags at the end of file
     *
-    * @access   private
     * @return   string  The XML footer of the feed.
     */
     private function makeFooter()
@@ -850,7 +825,6 @@ abstract class Feed
     /**
     * Creates a single node in XML format
     *
-    * @access   private
     * @param    string $tagName    name of the tag
     * @param    TagContentFix $tagContent tag value as string or array of nested tags in 'tagName' => 'tagValue' format
     * @param    ?array<string, string> $attributes Attributes (if any) in 'attrName' => 'attrValue' format
@@ -906,7 +880,6 @@ abstract class Feed
     /**
     * Make the channels.
     *
-    * @access   private
     * @return   string  The feed header as XML containing all the feed metadata.
     */
     private function makeChannels()
@@ -960,7 +933,6 @@ abstract class Feed
     /**
     * Prints formatted feed items
     *
-    * @access   private
     * @return   string  The XML of every feed item.
     */
     private function makeItems()
@@ -996,7 +968,6 @@ abstract class Feed
     /**
     * Make the starting tag of channels
     *
-    * @access   private
     * @param    string $about The value of about attribute which is used for RSS 1.0 only.
     * @return   string        The starting XML tag of an feed item.
     * @throws   InvalidOperationException if this object misses the data for the about attribute.
@@ -1023,7 +994,6 @@ abstract class Feed
     /**
     * Closes feed item tag
     *
-    * @access   private
     * @return   string  The ending XML tag of an feed item.
     */
     private function endItem()
@@ -1044,7 +1014,6 @@ abstract class Feed
     * A "]]>" respectively "<![CDATA" in the data would break the CDATA in the
     * XML, so the brackets are converted to a HTML entity.
     *
-    * @access   private
     * @param    string $text Data to be sanitized
     * @return   string  Sanitized data
     */

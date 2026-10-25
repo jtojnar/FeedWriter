@@ -78,7 +78,6 @@ class Item
     /**
     * Return an unique number
     *
-    * @access   private
     * @return   int
     **/
     private function cpt()
@@ -89,7 +88,6 @@ class Item
     /**
     * Add an element to elements array
     *
-    * @access   public
     * @param    string $elementName    The tag name of an element
     * @param    TagContentFix $content The content of tag
     * @param    array<string, string> $attributes Attributes (if any) in 'attrName' => 'attrValue' format
@@ -127,7 +125,6 @@ class Item
     * Set multiple feed elements from an array.
     * Elements which have attributes cannot be added by this method
     *
-    * @access   public
     * @param    array<string, TagContentFix> $elementArray array of elements in 'tagName' => 'tagContent' format.
     * @return   self
     */
@@ -143,7 +140,6 @@ class Item
     /**
     * Return the collection of elements in this feed item
     *
-    * @access   public
     * @return   array<string, Element> All elements of this item.
     * @throws   InvalidOperationException on ATOM feeds if either a content or link element is missing.
     * @throws   InvalidOperationException on RSS1 feeds if a title or link element is missing.
@@ -177,7 +173,6 @@ class Item
     /**
     * Return the type of this feed item
     *
-    * @access   public
     * @return   string  The feed type, as defined in Feed.php
     */
     public function getVersion()
@@ -190,7 +185,6 @@ class Item
     /**
     * Set the 'description' element of feed item
     *
-    * @access   public
     * @param    string $description The content of the 'description' or 'summary' element
     * @return   self
     */
@@ -205,7 +199,6 @@ class Item
     * Set the 'content' element of the feed item
     * For ATOM feeds only
     *
-    * @access   public
     * @param    string $content Content for the item (i.e., the body of a blog post).
     * @return   self
     * @throws   InvalidOperationException if this method is called on non-ATOM feeds.
@@ -221,7 +214,6 @@ class Item
     /**
     * Set the 'title' element of feed item
     *
-    * @access   public
     * @param    string $title The content of 'title' element
     * @return   self
     */
@@ -237,7 +229,6 @@ class Item
     * DateTimeInterface, an integer containing a UNIX timestamp or a string
     * which is parseable by PHP's 'strtotime' function.
     *
-    * @access   public
     * @param    DateTimeInterface|int|string $date Date which should be used.
     * @return   self
     * @throws   \InvalidArgumentException if the given date was not parseable.
@@ -273,7 +264,6 @@ class Item
     /**
     * Set the 'link' element of feed item
     *
-    * @access   public
     * @param    string $link The content of 'link' element
     * @return   self
     */
@@ -298,7 +288,6 @@ class Item
     * Note that you should avoid the use of more than one enclosure in one item,
     * since some RSS aggregators don't support it.
     *
-    * @access   public
     * @param    string $url       The URL of the media.
     * @param    integer $length   The length of the media.
     * @param    string  $type     The MIME type attribute of the media.
@@ -341,7 +330,6 @@ class Item
     * Set the 'author' element of feed item.
     * Not supported in RSS 1.0 feeds.
     *
-    * @access   public
     * @param    string $author The author of this item
     * @param    string|null $email Optional email address of the author
     * @param    string|null $uri Optional URI related to the author
@@ -386,7 +374,6 @@ class Item
     *
     * On ATOM feeds, the identifier must begin with an valid URI scheme.
     *
-    * @access   public
     * @param    string $id         The unique identifier of this item
     * @param    boolean $permaLink The value of the 'isPermaLink' attribute in RSS 2 feeds.
     * @return   self
