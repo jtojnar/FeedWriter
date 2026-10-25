@@ -98,7 +98,7 @@ abstract class Feed
      *
      * @param Feed::RSS1|Feed::RSS2|Feed::ATOM $version the version constant (RSS1/RSS2/ATOM)
      */
-    protected function __construct($version = Feed::RSS2)
+    protected function __construct($version = self::RSS2)
     {
         $this->version = $version;
 
@@ -170,9 +170,9 @@ abstract class Feed
      */
     public function addGenerator()
     {
-        if ($this->version == Feed::ATOM) {
+        if ($this->version == self::ATOM) {
             $this->setChannelElement('atom:generator', 'FeedWriter', ['uri' => 'https://github.com/mibe/FeedWriter']);
-        } elseif ($this->version == Feed::RSS2) {
+        } elseif ($this->version == self::RSS2) {
             $this->setChannelElement('generator', 'FeedWriter');
         } else {
             throw new InvalidOperationException('The generator element is not supported in RSS1 feeds.');
@@ -266,11 +266,11 @@ abstract class Feed
     public function getMIMEType()
     {
         switch ($this->version) {
-            case Feed::RSS2: $mimeType = 'application/rss+xml';
+            case self::RSS2: $mimeType = 'application/rss+xml';
                 break;
-            case Feed::RSS1: $mimeType = 'application/rdf+xml';
+            case self::RSS1: $mimeType = 'application/rdf+xml';
                 break;
-            case Feed::ATOM: $mimeType = 'application/atom+xml';
+            case self::ATOM: $mimeType = 'application/atom+xml';
                 break;
             default: $mimeType = 'text/xml';
         }
@@ -316,7 +316,7 @@ abstract class Feed
      */
     public function generateFeed()
     {
-        if ($this->version != Feed::ATOM && !\array_key_exists('link', $this->channels)) {
+        if ($this->version != self::ATOM && !\array_key_exists('link', $this->channels)) {
             throw new InvalidOperationException('RSS1 & RSS2 feeds need a link element. Call the setLink method before this method.');
         }
 
@@ -455,12 +455,12 @@ abstract class Feed
      */
     public function setDate($date)
     {
-        if ($this->version == Feed::RSS1) {
+        if ($this->version == self::RSS1) {
             throw new InvalidOperationException('The publication date is not supported in RSS1 feeds.');
         }
 
         // The feeds have different date formats.
-        $format = $this->version == Feed::ATOM ? \DATE_ATOM : \DATE_RSS;
+        $format = $this->version == self::ATOM ? \DATE_ATOM : \DATE_RSS;
 
         if ($date instanceof \DateTime || $date instanceof \DateTimeInterface) {
             $date = $date->format($format);
@@ -477,7 +477,7 @@ abstract class Feed
             throw new \InvalidArgumentException('The given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.');
         }
 
-        if ($this->version == Feed::ATOM) {
+        if ($this->version == self::ATOM) {
             $this->setChannelElement('updated', $date);
         } else {
             $this->setChannelElement('lastBuildDate', $date);
@@ -501,7 +501,7 @@ abstract class Feed
             throw new \InvalidArgumentException('The description may not be empty or NULL.');
         }
 
-        if ($this->version != Feed::ATOM) {
+        if ($this->version != self::ATOM) {
             $this->setChannelElement('description', $description);
         } else {
             $this->setChannelElement('subtitle', $description);
@@ -525,7 +525,7 @@ abstract class Feed
             throw new \InvalidArgumentException('The link may not be empty or NULL.');
         }
 
-        if ($this->version == Feed::ATOM) {
+        if ($this->version == self::ATOM) {
             $this->setAtomLink($link);
         } else {
             $this->setChannelElement('link', $link);
@@ -599,7 +599,7 @@ abstract class Feed
 
         // ATOM spec. has some restrictions on atom:link usage
         // See RFC 4287, page 12 (4.1.1)
-        if ($this->version == Feed::ATOM) {
+        if ($this->version == self::ATOM) {
             foreach ($this->channels as $key => $value) {
                 if ($key != 'atom:link') {
                     continue;
@@ -653,7 +653,7 @@ abstract class Feed
         }
 
         // RSS feeds have support for a title & link element.
-        if ($this->version != Feed::ATOM) {
+        if ($this->version != self::ATOM) {
             if (!\is_string($title) || empty($title)) {
                 throw new \InvalidArgumentException('title parameter must be a string and may not be empty or NULL.');
             }
@@ -669,7 +669,7 @@ abstract class Feed
         }
 
         // Special handling for RSS1 again (since RSS1 is a bit strange...)
-        if ($this->version == Feed::RSS1) {
+        if ($this->version == self::RSS1) {
             $this->data['Image'] = $data;
 
             return $this->setChannelElement($name, '', ['rdf:resource' => $url], false);
@@ -690,7 +690,7 @@ abstract class Feed
      */
     public function setChannelAbout($url)
     {
-        if ($this->version != Feed::RSS1) {
+        if ($this->version != self::RSS1) {
             throw new InvalidOperationException('This method is only supported in RSS1 feeds.');
         }
         if (empty($url)) {
@@ -818,14 +818,14 @@ abstract class Feed
         $tagName = '';
         $defaultNamespace = '';
 
-        if ($this->version == Feed::RSS2) {
+        if ($this->version == self::RSS2) {
             $tagName = 'rss';
             $attributes['version'] = '2.0';
-        } elseif ($this->version == Feed::RSS1) {
+        } elseif ($this->version == self::RSS1) {
             $tagName = 'rdf:RDF';
             $prefixes[] = 'rdf';
             $defaultNamespace = $this->namespaces['rss1'];
-        } elseif ($this->version == Feed::ATOM) {
+        } elseif ($this->version == self::ATOM) {
             $tagName = 'feed';
             $defaultNamespace = $this->namespaces['atom'];
 
@@ -861,11 +861,11 @@ abstract class Feed
      */
     private function makeFooter()
     {
-        if ($this->version == Feed::RSS2) {
+        if ($this->version == self::RSS2) {
             return '</channel>' . \PHP_EOL . '</rss>';
-        } elseif ($this->version == Feed::RSS1) {
+        } elseif ($this->version == self::RSS1) {
             return '</rdf:RDF>';
-        } elseif ($this->version == Feed::ATOM) {
+        } elseif ($this->version == self::ATOM) {
             return '</feed>';
         }
 
@@ -898,7 +898,7 @@ abstract class Feed
             }
         }
 
-        $attrText .= (\in_array($tagName, $this->CDATAEncoding) && $this->version == Feed::ATOM) ? ' type="html"' : '';
+        $attrText .= (\in_array($tagName, $this->CDATAEncoding) && $this->version == self::ATOM) ? ' type="html"' : '';
         $nodeText .= "<{$tagName}{$attrText}>";
         $nodeText .= (\in_array($tagName, $this->CDATAEncoding)) ? '<![CDATA[' : '';
 
@@ -942,10 +942,10 @@ abstract class Feed
 
         // Start channel tag
         switch ($this->version) {
-            case Feed::RSS2:
+            case self::RSS2:
                 $out .= '<channel>' . \PHP_EOL;
                 break;
-            case Feed::RSS1:
+            case self::RSS1:
                 $out .= (isset($this->data['ChannelAbout'])) ? "<channel rdf:about=\"{$this->data['ChannelAbout']}\">" : "<channel rdf:about=\"{$this->channels['link'][0]['content']}\">";
                 break;
         }
@@ -954,7 +954,7 @@ abstract class Feed
         foreach ($this->channels as $key => $value) {
             // In ATOM feeds, strip all ATOM namespace prefixes from the tag name. They are not needed here,
             // because the ATOM namespace name is set as default namespace.
-            if ($this->version == Feed::ATOM && strncmp($key, 'atom', 4) == 0) {
+            if ($this->version == self::ATOM && strncmp($key, 'atom', 4) == 0) {
                 $key = substr($key, 5);
             }
 
@@ -964,7 +964,7 @@ abstract class Feed
             }
         }
 
-        if ($this->version == Feed::RSS1) {
+        if ($this->version == self::RSS1) {
             // RSS 1.0 have special tag <rdf:Seq> with channel
             $out .= '<items>' . \PHP_EOL . '<rdf:Seq>' . \PHP_EOL;
             foreach ($this->items as $item) {
@@ -977,9 +977,9 @@ abstract class Feed
             if (\array_key_exists('Image', $this->data)) {
                 $out .= $this->makeNode('image', $this->data['Image'], ['rdf:about' => $this->data['Image']['url']]);
             }
-        } elseif ($this->version == Feed::ATOM) {
+        } elseif ($this->version == self::ATOM) {
             // ATOM feeds have a unique feed ID. Use the title channel element as key.
-            $out .= $this->makeNode('id', Feed::uuid($this->channels['title'][0]['content'], 'urn:uuid:'));
+            $out .= $this->makeNode('id', self::uuid($this->channels['title'][0]['content'], 'urn:uuid:'));
         }
 
         return $out;
@@ -999,7 +999,7 @@ abstract class Feed
 
             // The argument is printed as rdf:about attribute of item in RSS 1.0
             // We're using the link set in the item (which is mandatory) as the about attribute.
-            if ($this->version == Feed::RSS1) {
+            if ($this->version == self::RSS1) {
                 $out .= $this->startItem($thisItems['link']['content']);
             } else {
                 $out .= $this->startItem();
@@ -1010,7 +1010,7 @@ abstract class Feed
 
                 // Strip all ATOM namespace prefixes from tags when feed is an ATOM feed.
                 // Not needed here, because the ATOM namespace name is used as default namespace.
-                if ($this->version == Feed::ATOM && strncmp($name, 'atom', 4) == 0) {
+                if ($this->version == self::ATOM && strncmp($name, 'atom', 4) == 0) {
                     $name = substr($name, 5);
                 }
 
@@ -1035,15 +1035,15 @@ abstract class Feed
     {
         $out = '';
 
-        if ($this->version == Feed::RSS2) {
+        if ($this->version == self::RSS2) {
             $out .= '<item>' . \PHP_EOL;
-        } elseif ($this->version == Feed::RSS1) {
+        } elseif ($this->version == self::RSS1) {
             if ($about) {
                 $out .= "<item rdf:about=\"$about\">" . \PHP_EOL;
             } else {
                 throw new InvalidOperationException('Missing data for about attribute. Call setChannelAbout method.');
             }
-        } elseif ($this->version == Feed::ATOM) {
+        } elseif ($this->version == self::ATOM) {
             $out .= '<entry>' . \PHP_EOL;
         }
 
@@ -1057,9 +1057,9 @@ abstract class Feed
      */
     private function endItem()
     {
-        if ($this->version == Feed::RSS2 || $this->version == Feed::RSS1) {
+        if ($this->version == self::RSS2 || $this->version == self::RSS1) {
             return '</item>' . \PHP_EOL;
-        } elseif ($this->version == Feed::ATOM) {
+        } elseif ($this->version == self::ATOM) {
             return '</entry>' . \PHP_EOL;
         }
 
