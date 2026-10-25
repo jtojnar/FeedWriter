@@ -54,9 +54,8 @@ class Item
     /**
      * Return an unique number.
      *
-     * @return int
      **/
-    private function cpt()
+    private function cpt(): int
     {
         return $this->_cpt++;
     }
@@ -70,11 +69,9 @@ class Item
      * @param bool                  $overwrite     specifies if an already existing element is overwritten
      * @param bool                  $allowMultiple specifies if multiple elements of the same name are allowed
      *
-     * @return self
-     *
      * @throws \InvalidArgumentException if the element name is not a string, empty or NULL
      */
-    public function addElement($elementName, $content, array $attributes = [], $overwrite = false, $allowMultiple = false)
+    public function addElement($elementName, $content, array $attributes = [], $overwrite = false, $allowMultiple = false): self
     {
         if (empty($elementName)) {
             throw new \InvalidArgumentException('The element name may not be empty or NULL.');
@@ -107,10 +104,8 @@ class Item
      * Elements which have attributes cannot be added by this method.
      *
      * @param array<string, TagContentFix> $elementArray array of elements in 'tagName' => 'tagContent' format
-     *
-     * @return self
      */
-    public function addElementArray(array $elementArray)
+    public function addElementArray(array $elementArray): self
     {
         foreach ($elementArray as $elementName => $content) {
             $this->addElement($elementName, $content);
@@ -127,7 +122,7 @@ class Item
      * @throws InvalidOperationException on ATOM feeds if either a content or link element is missing
      * @throws InvalidOperationException on RSS1 feeds if a title or link element is missing
      */
-    public function getElements()
+    public function getElements(): array
     {
         // ATOM feeds have some specific requirements...
         if ($this->version == Feed::ATOM) {
@@ -160,7 +155,7 @@ class Item
      *
      * @return Feed::RSS1|Feed::RSS2|Feed::ATOM
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -171,10 +166,8 @@ class Item
      * Set the 'description' element of feed item.
      *
      * @param string $description The content of the 'description' or 'summary' element
-     *
-     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $tag = ($this->version == Feed::ATOM) ? 'summary' : 'description';
 
@@ -187,11 +180,9 @@ class Item
      *
      * @param string $content Content for the item (i.e., the body of a blog post).
      *
-     * @return self
-     *
      * @throws InvalidOperationException if this method is called on non-ATOM feeds
      */
-    public function setContent($content)
+    public function setContent($content): self
     {
         if ($this->version != Feed::ATOM) {
             throw new InvalidOperationException('The content element is supported in ATOM feeds only.');
@@ -204,10 +195,8 @@ class Item
      * Set the 'title' element of feed item.
      *
      * @param string $title The content of 'title' element
-     *
-     * @return self
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         return $this->addElement('title', $title);
     }
@@ -221,11 +210,9 @@ class Item
      *
      * @param \DateTimeInterface|int|string $date date which should be used
      *
-     * @return self
-     *
      * @throws \InvalidArgumentException if the given date was not parseable
      */
-    public function setDate($date)
+    public function setDate($date): self
     {
         if (!is_numeric($date)) {
             if ($date instanceof \DateTime || $date instanceof \DateTimeInterface) {
@@ -259,10 +246,8 @@ class Item
      * Set the 'link' element of feed item.
      *
      * @param string $link The content of 'link' element
-     *
-     * @return self
      */
-    public function setLink($link)
+    public function setLink($link): self
     {
         if ($this->version == Feed::RSS2 || $this->version == Feed::RSS1) {
             $this->addElement('link', $link);
@@ -288,15 +273,13 @@ class Item
      * @param string $type     the MIME type attribute of the media
      * @param bool   $multiple Specifies if multiple enclosures are allowed
      *
-     * @return self
-     *
      * @see     https://tools.ietf.org/html/rfc6838
      * @see     http://www.iana.org/assignments/media-types/media-types.xhtml
      *
      * @throws \InvalidArgumentException if the length or type parameter is invalid
      * @throws InvalidOperationException if this method is called on RSS1 feeds
      */
-    public function addEnclosure($url, $length, $type, $multiple = true)
+    public function addEnclosure($url, $length, $type, $multiple = true): self
     {
         if ($this->version == Feed::RSS1) {
             throw new InvalidOperationException('Media attachment is not supported in RSS1 feeds.');
@@ -335,12 +318,10 @@ class Item
      * @param string|null $email  Optional email address of the author
      * @param string|null $uri    Optional URI related to the author
      *
-     * @return self
-     *
      * @throws \InvalidArgumentException if the provided email address is syntactically incorrect
      * @throws InvalidOperationException if this method is called on RSS1 feeds
      */
-    public function setAuthor($author, $email = null, $uri = null)
+    public function setAuthor($author, $email = null, $uri = null): self
     {
         if ($this->version == Feed::RSS1) {
             throw new InvalidOperationException('The author element is not supported in RSS1 feeds.');
@@ -382,12 +363,10 @@ class Item
      * @param string $id        The unique identifier of this item
      * @param bool   $permaLink the value of the 'isPermaLink' attribute in RSS 2 feeds
      *
-     * @return self
-     *
      * @throws \InvalidArgumentException if the permaLink parameter is not boolean
      * @throws InvalidOperationException if this method is called on RSS1 feeds
      */
-    public function setId($id, $permaLink = false)
+    public function setId($id, $permaLink = false): self
     {
         if ($this->version == Feed::RSS2) {
             if (!\is_bool($permaLink)) {
