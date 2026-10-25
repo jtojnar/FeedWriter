@@ -1,4 +1,5 @@
 <?php
+
 namespace FeedWriter;
 
 use \DateTime;
@@ -53,7 +54,9 @@ abstract class Feed
     // So, define constants for RSS 1.0, RSS 2.0 and ATOM
 
     const RSS1 = 'RSS 1.0';
+
     const RSS2 = 'RSS 2.0';
+
     const ATOM = 'ATOM';
 
     const VERSION = '1.1.0';
@@ -63,14 +66,14 @@ abstract class Feed
     *
     * @var array<string, array<Element>>
     */
-    private $channels      = [];
+    private $channels = [];
 
     /**
     * Collection of items as object of \FeedWriter\Item class.
     *
     * @var Item[]
     */
-    private $items         = [];
+    private $items = [];
 
     /**
     * Collection of other version wise data.
@@ -79,7 +82,7 @@ abstract class Feed
     *
     * @var array{Image?: string|array{title: string, link: string, url: string}, ChannelAbout?: string}
     */
-    private $data          = [];
+    private $data = [];
 
     /**
     * The tag names which have to encoded as CDATA
@@ -93,21 +96,21 @@ abstract class Feed
     *
     * @var array<string, string>
     */
-    private $namespaces    = [];
+    private $namespaces = [];
 
     /**
     * Contains the format of this feed.
     *
     * @var Feed::RSS1|Feed::RSS2|Feed::ATOM
     */
-    private $version       = null;
+    private $version = null;
 
     /**
     * Contains the encoding of this feed.
     *
     * @var string
     */
-    private $encoding      = 'utf-8';
+    private $encoding = 'utf-8';
 
     /**
      * Constructor
@@ -274,13 +277,13 @@ abstract class Feed
     public function getMIMEType()
     {
         switch ($this->version) {
-            case Feed::RSS2 : $mimeType = 'application/rss+xml';
+            case Feed::RSS2: $mimeType = 'application/rss+xml';
                 break;
-            case Feed::RSS1 : $mimeType = 'application/rdf+xml';
+            case Feed::RSS1: $mimeType = 'application/rdf+xml';
                 break;
-            case Feed::ATOM : $mimeType = 'application/atom+xml';
+            case Feed::ATOM: $mimeType = 'application/atom+xml';
                 break;
-            default : $mimeType = 'text/xml';
+            default: $mimeType = 'text/xml';
         }
 
         return $mimeType;
@@ -463,7 +466,7 @@ abstract class Feed
 
         if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
             $date = $date->format($format);
-        } elseif(is_numeric($date) && $date >= 0) {
+        } elseif (is_numeric($date) && $date >= 0) {
             $date = date($format, $date);
         } elseif (is_string($date)) {
             $timestamp = strtotime($date);
@@ -650,7 +653,7 @@ abstract class Feed
                 throw new \InvalidArgumentException('link parameter must be a string and may not be empty or NULL.');
             }
 
-            $data = ['title'=>$title, 'link'=>$link, 'url'=>$url];
+            $data = ['title' => $title, 'link' => $link, 'url' => $url];
             $name = 'image';
         } else {
             $name = 'logo';
@@ -660,6 +663,7 @@ abstract class Feed
         // Special handling for RSS1 again (since RSS1 is a bit strange...)
         if ($this->version == Feed::RSS1) {
             $this->data['Image'] = $data;
+
             return $this->setChannelElement($name, '', ['rdf:resource' => $url], false);
         } else {
             return $this->setChannelElement($name, $data);
@@ -706,11 +710,11 @@ abstract class Feed
     {
         $key = ($key == null) ? uniqid((string) rand()) : $key;
         $chars = md5($key);
-        $uuid  = substr($chars,0,8) . '-';
-        $uuid .= substr($chars,8,4) . '-';
-        $uuid .= substr($chars,12,4) . '-';
-        $uuid .= substr($chars,16,4) . '-';
-        $uuid .= substr($chars,20,12);
+        $uuid = substr($chars, 0, 8) . '-';
+        $uuid .= substr($chars, 8, 4) . '-';
+        $uuid .= substr($chars, 12, 4) . '-';
+        $uuid .= substr($chars, 16, 4) . '-';
+        $uuid .= substr($chars, 20, 12);
 
         return $prefix . $uuid;
     }
@@ -793,7 +797,7 @@ abstract class Feed
     */
     private function makeHeader()
     {
-        $out = '<?xml version="1.0" encoding="'.$this->encoding.'" ?>' . PHP_EOL;
+        $out = '<?xml version="1.0" encoding="' . $this->encoding . '" ?>' . PHP_EOL;
 
         $prefixes = $this->getNamespacePrefixes();
         $attributes = [];
@@ -921,17 +925,17 @@ abstract class Feed
     {
         $out = '';
 
-        //Start channel tag
+        // Start channel tag
         switch ($this->version) {
             case Feed::RSS2:
                 $out .= '<channel>' . PHP_EOL;
                 break;
             case Feed::RSS1:
-                $out .= (isset($this->data['ChannelAbout']))? "<channel rdf:about=\"{$this->data['ChannelAbout']}\">" : "<channel rdf:about=\"{$this->channels['link'][0]['content']}\">";
+                $out .= (isset($this->data['ChannelAbout'])) ? "<channel rdf:about=\"{$this->data['ChannelAbout']}\">" : "<channel rdf:about=\"{$this->channels['link'][0]['content']}\">";
                 break;
         }
 
-        //Print Items of channel
+        // Print Items of channel
         foreach ($this->channels as $key => $value) {
             // In ATOM feeds, strip all ATOM namespace prefixes from the tag name. They are not needed here,
             // because the ATOM namespace name is set as default namespace.
@@ -946,7 +950,7 @@ abstract class Feed
         }
 
         if ($this->version == Feed::RSS1) {
-            //RSS 1.0 have special tag <rdf:Seq> with channel
+            // RSS 1.0 have special tag <rdf:Seq> with channel
             $out .= '<items>' . PHP_EOL . '<rdf:Seq>' . PHP_EOL;
             foreach ($this->items as $item) {
                 $thisItems = $item->getElements();
@@ -1064,5 +1068,4 @@ abstract class Feed
     }
 
     // End # private functions ----------------------------------------------
-
 } // end of class Feed

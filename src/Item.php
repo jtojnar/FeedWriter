@@ -1,4 +1,5 @@
 <?php
+
 namespace FeedWriter;
 
 use \DateTime;
@@ -116,8 +117,8 @@ class Item
             $key .= '-' . $this->cpt();
         }
 
-        $this->elements[$key]['name']       = $elementName;
-        $this->elements[$key]['content']    = $content;
+        $this->elements[$key]['name'] = $elementName;
+        $this->elements[$key]['content'] = $content;
         $this->elements[$key]['attributes'] = $attributes;
 
         return $this;
@@ -255,14 +256,14 @@ class Item
         }
 
         if ($this->version == Feed::ATOM) {
-            $tag    = 'updated';
-            $value  = date(\DATE_ATOM, $date);
+            $tag = 'updated';
+            $value = date(\DATE_ATOM, $date);
         } elseif ($this->version == Feed::RSS2) {
-            $tag    = 'pubDate';
-            $value  = date(\DATE_RSS, $date);
+            $tag = 'pubDate';
+            $value = date(\DATE_RSS, $date);
         } else {
-            $tag    = 'dc:date';
-            $value  = date('Y-m-d', $date);
+            $tag = 'dc:date';
+            $value = date('Y-m-d', $date);
         }
 
         return $this->addElement($tag, $value);
@@ -279,8 +280,8 @@ class Item
         if ($this->version == Feed::RSS2 || $this->version == Feed::RSS1) {
             $this->addElement('link', $link);
         } else {
-            $this->addElement('link','',['href'=>$link]);
-            $this->setId(Feed::uuid($link,'urn:uuid:'));
+            $this->addElement('link', '', ['href' => $link]);
+            $this->setId(Feed::uuid($link, 'urn:uuid:'));
         }
 
         return $this;
@@ -410,7 +411,7 @@ class Item
             $found = FALSE;
             $checkId = strtolower($id);
 
-            foreach($validSchemes as $scheme) {
+            foreach ($validSchemes as $scheme) {
                 if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== FALSE) {
                     $found = TRUE;
                     break;
@@ -428,5 +429,4 @@ class Item
 
         return $this;
     }
-
- } // end of class Item
+} // end of class Item

@@ -30,20 +30,20 @@ use \FeedWriter\RSS2;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//Creating an instance of RSS2 class.
+// Creating an instance of RSS2 class.
 $TestFeed = new RSS2();
 
-//Setting the channel elements
-//Use wrapper functions for common channel elements
+// Setting the channel elements
+// Use wrapper functions for common channel elements
 $TestFeed->setTitle('Testing & Checking the RSS writer class');
 $TestFeed->setLink('http://www.ajaxray.com');
 $TestFeed->setDescription('This is a test of creating a RSS 2.0 feed Universal Feed Writer');
 
-//Let's add some feed items: Create two empty Item instances
+// Let's add some feed items: Create two empty Item instances
 $itemOne = $TestFeed->createNewItem();
 $itemTwo = $TestFeed->createNewItem();
 
-//Add item details
+// Add item details
 $itemOne->setTitle('The title of the first entry.');
 $itemOne->setLink('http://www.google.de');
 $itemOne->setDate(time());
@@ -54,9 +54,9 @@ $itemTwo->setLink('http://www.example.com');
 $itemTwo->setDate(1234567890);
 $itemTwo->setDescription('Lorem ipsum dolor sit amet, consectetur, adipisci velit');
 
-//Now add the feed item
+// Now add the feed item
 $TestFeed->addItem($itemOne);
 $TestFeed->addItem($itemTwo);
 
-//OK. Everything is done. Now generate the feed.
+// OK. Everything is done. Now generate the feed.
 $TestFeed->printFeed();

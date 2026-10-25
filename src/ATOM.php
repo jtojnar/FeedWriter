@@ -1,4 +1,5 @@
 <?php
+
 namespace FeedWriter;
 
 /*
@@ -32,5 +33,4 @@ class ATOM extends Feed
     {
         parent::__construct(Feed::ATOM);
     }
-
 }
