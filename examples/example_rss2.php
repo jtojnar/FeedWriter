@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2008 Anis uddin Ahmad <anisniit@gmail.com>
+// SPDX-FileCopyrightText: 2013 Michael Bemmerl <mail@mx-server.de>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 // You should use an autoloader instead of including the files directly.
 // This is done here only to make the examples work out of the box.
 require_once __DIR__ . '/../src/Item.php';
@@ -10,26 +14,6 @@ require_once __DIR__ . '/../src/InvalidOperationException.php';
 date_default_timezone_set('UTC');
 
 use FeedWriter\RSS2;
-
-/**
- * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>
- * Copyright (C) 2013 Michael Bemmerl <mail@mx-server.de>
- *
- * This file is part of the "Universal Feed Writer" project.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 // Creating an instance of RSS2 class.
 $TestFeed = new RSS2();
