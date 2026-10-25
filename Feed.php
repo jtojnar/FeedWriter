@@ -842,6 +842,9 @@ abstract class Feed
         } elseif ($this->version == Feed::ATOM) {
             return '</feed>';
         }
+
+        // For PHPStan.
+        throw new \Exception('Unreachable version ' . $this->version);
     }
 
     /**
@@ -1030,6 +1033,9 @@ abstract class Feed
         } elseif ($this->version == Feed::ATOM) {
             return '</entry>' . PHP_EOL;
         }
+
+        // For PHPStan.
+        throw new \Exception('Unreachable version ' . $this->version);
     }
 
     /**
