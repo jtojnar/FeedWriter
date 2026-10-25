@@ -287,11 +287,9 @@ abstract class Feed
      *
      * @param bool $useGenericContentType FALSE if the specific feed media type should be sent
      *
-     * @return void
-     *
      * @throws \InvalidArgumentException if the useGenericContentType parameter is not boolean
      */
-    public function printFeed($useGenericContentType = false)
+    public function printFeed($useGenericContentType = false): void
     {
         if (!is_bool($useGenericContentType)) {
             throw new \InvalidArgumentException('The useGenericContentType parameter must be boolean.');
@@ -368,10 +366,8 @@ abstract class Feed
      * Remove tags from the list of CDATA encoded tags.
      *
      * @param array<string> $tags an array of tag names that should be removed
-     *
-     * @return void
      */
-    public function removeCDATAEncoding(array $tags)
+    public function removeCDATAEncoding(array $tags): void
     {
         // Call array_values to re-index the array.
         $this->CDATAEncoding = array_values(array_diff($this->CDATAEncoding, $tags));
