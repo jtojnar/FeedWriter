@@ -79,7 +79,7 @@ class Item
         if (empty($elementName)) {
             throw new \InvalidArgumentException('The element name may not be empty or NULL.');
         }
-        if (!is_string($elementName)) {
+        if (!\is_string($elementName)) {
             throw new \InvalidArgumentException('The element name must be a string.');
         }
 
@@ -133,21 +133,21 @@ class Item
         if ($this->version == Feed::ATOM) {
             // Add an 'id' element, if it was not added by calling the setLink method.
             // Use the value of the title element as key, since no link element was specified.
-            if (!array_key_exists('id', $this->elements)) {
+            if (!\array_key_exists('id', $this->elements)) {
                 $this->setId(Feed::uuid($this->elements['title']['content'], 'urn:uuid:'));
             }
 
             // Either a 'link' or 'content' element is needed.
-            if (!array_key_exists('content', $this->elements) && !array_key_exists('link', $this->elements)) {
+            if (!\array_key_exists('content', $this->elements) && !\array_key_exists('link', $this->elements)) {
                 throw new InvalidOperationException('ATOM feed entries need a link or a content element. Call the setLink or setContent method.');
             }
         }
         // ...same with RSS1 feeds.
         elseif ($this->version == Feed::RSS1) {
-            if (!array_key_exists('title', $this->elements)) {
+            if (!\array_key_exists('title', $this->elements)) {
                 throw new InvalidOperationException('RSS1 feed entries need a title element. Call the setTitle method.');
             }
-            if (!array_key_exists('link', $this->elements)) {
+            if (!\array_key_exists('link', $this->elements)) {
                 throw new InvalidOperationException('RSS1 feed entries need a link element. Call the setLink method.');
             }
         }
@@ -309,7 +309,7 @@ class Item
         }
 
         // Regex used from RFC 4287, page 41
-        if (!is_string($type) || preg_match('/.+\/.+/', $type) != 1) {
+        if (!\is_string($type) || preg_match('/.+\/.+/', $type) != 1) {
             throw new \InvalidArgumentException('type parameter must be a string and a MIME type.');
         }
 
@@ -390,7 +390,7 @@ class Item
     public function setId($id, $permaLink = false)
     {
         if ($this->version == Feed::RSS2) {
-            if (!is_bool($permaLink)) {
+            if (!\is_bool($permaLink)) {
                 throw new \InvalidArgumentException('The permaLink parameter must be boolean.');
             }
 
@@ -406,7 +406,7 @@ class Item
             $checkId = strtolower($id);
 
             foreach ($validSchemes as $scheme) {
-                if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== false) {
+                if (strrpos($checkId, $scheme . ':', -\strlen($checkId)) !== false) {
                     $found = true;
                     break;
                 }
