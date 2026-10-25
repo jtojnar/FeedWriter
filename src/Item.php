@@ -29,7 +29,6 @@ use \DateTimeInterface;
  *
  * Item class - Used as feed element in Feed class
  *
- * @package         UniversalFeedWriter
  * @author          Anis uddin Ahmad <anisniit@gmail.com>
  * @link            http://www.ajaxray.com/projects/rss
  *

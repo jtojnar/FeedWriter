@@ -22,8 +22,6 @@ namespace FeedWriter;
 
 /**
  * Wrapper for creating ATOM feeds
- *
- * @package     UniversalFeedWriter
  */
 class ATOM extends Feed
 {

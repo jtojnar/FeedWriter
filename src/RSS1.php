@@ -22,8 +22,6 @@ namespace FeedWriter;
 
 /**
  * Wrapper for creating RSS1 feeds
- *
- * @package     UniversalFeedWriter
  */
 class RSS1 extends Feed
 {
