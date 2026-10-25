@@ -122,7 +122,7 @@ class Item
     /**
      * Return the collection of elements in this feed item.
      *
-     * @return array<string, Element> all elements of this item
+     * @return array<string, Element>
      *
      * @throws InvalidOperationException on ATOM feeds if either a content or link element is missing
      * @throws InvalidOperationException on RSS1 feeds if a title or link element is missing

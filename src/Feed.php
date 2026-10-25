@@ -261,7 +261,7 @@ abstract class Feed
     /**
      * Get the appropriate MIME type string for the current feed.
      *
-     * @return string the MIME type string
+     * @return string
      */
     public function getMIMEType()
     {
@@ -308,9 +308,9 @@ abstract class Feed
     }
 
     /**
-     * Generate the feed.
+     * Generate the feed XML document.
      *
-     * @return string the complete feed XML
+     * @return string
      *
      * @throws InvalidOperationException if the link element of the feed is not set
      */
@@ -329,7 +329,7 @@ abstract class Feed
     /**
      * Create a new Item.
      *
-     * @return Item instance of Item class
+     * @return Item
      */
     public function createNewItem()
     {
@@ -353,9 +353,9 @@ abstract class Feed
     }
 
     /**
-     * Get list of CDATA encoded properties.
+     * Returns a list of tag names whose contents are to be encoded as CDATA.
      *
-     * @return array<string> Return an array of CDATA properties that are to be encoded as CDATA
+     * @return array<string>
      */
     public function getCDATAEncoding()
     {
@@ -716,7 +716,7 @@ abstract class Feed
      * @param ?string $key    optional key on which the UUID is generated
      * @param string  $prefix an optional prefix
      *
-     * @return string the formatted UUID
+     * @return string
      */
     public static function uuid($key = null, $prefix = '')
     {
@@ -741,7 +741,7 @@ abstract class Feed
      * @param string $string      string which should be filtered
      * @param string $replacement replace invalid characters with this string
      *
-     * @return string the filtered string
+     * @return string
      */
     public static function filterInvalidXMLChars($string, $replacement = '_') // default to '\x{FFFD}' ???
     {
@@ -766,11 +766,12 @@ abstract class Feed
 
     /**
      * Returns all used XML namespace prefixes in this instance.
+     *
      * This includes all channel elements and feed items.
      * Unfortunately some namespace prefixes are not included,
      * because they are hardcoded, e.g. rdf.
      *
-     * @return array<string> array with namespace prefix as value
+     * @return array<string>
      */
     private function getNamespacePrefixes()
     {
@@ -805,7 +806,7 @@ abstract class Feed
     /**
      * Returns the XML header and root element, depending on the feed type.
      *
-     * @return string the XML header of the feed
+     * @return string
      *
      * @throws InvalidOperationException if an unknown XML namespace prefix is encountered
      */
@@ -855,9 +856,9 @@ abstract class Feed
     }
 
     /**
-     * Closes the open tags at the end of file.
+     * Returns XML fragment with closing tags at the end of file.
      *
-     * @return string the XML footer of the feed
+     * @return string
      */
     private function makeFooter()
     {
@@ -881,7 +882,7 @@ abstract class Feed
      * @param ?array<string, string> $attributes Attributes (if any) in 'attrName' => 'attrValue' format
      * @param bool                   $omitEndTag True if the end tag should be omitted. Defaults to false.
      *
-     * @return string formatted xml tag
+     * @return string
      *
      * @throws \InvalidArgumentException if the tagContent is not an array and not a string
      */
@@ -932,9 +933,9 @@ abstract class Feed
     }
 
     /**
-     * Make the channels.
+     * Returns a XML fragment of the feed header containing all the feed metadata.
      *
-     * @return string the feed header as XML containing all the feed metadata
+     * @return string
      */
     private function makeChannels()
     {
@@ -986,9 +987,9 @@ abstract class Feed
     }
 
     /**
-     * Prints formatted feed items.
+     * Returns the XML fragment containing formatted feed items.
      *
-     * @return string the XML of every feed item
+     * @return string
      */
     private function makeItems()
     {
@@ -1023,11 +1024,11 @@ abstract class Feed
     }
 
     /**
-     * Make the starting tag of channels.
+     * Returns a XML fragment containing the starting tag of a feed item.
      *
      * @param string $about The value of about attribute which is used for RSS 1.0 only.
      *
-     * @return string the starting XML tag of an feed item
+     * @return string
      *
      * @throws InvalidOperationException if this object misses the data for the about attribute
      */
@@ -1051,9 +1052,9 @@ abstract class Feed
     }
 
     /**
-     * Closes feed item tag.
+     * Returns a XML fragment with closing XML tag of a feed item.
      *
-     * @return string the ending XML tag of an feed item
+     * @return string
      */
     private function endItem()
     {
@@ -1075,7 +1076,7 @@ abstract class Feed
      *
      * @param string $text Data to be sanitized
      *
-     * @return string Sanitized data
+     * @return string
      */
     private function sanitizeCDATA($text)
     {
