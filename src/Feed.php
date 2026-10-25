@@ -50,13 +50,13 @@ abstract class Feed
     // RSS 0.91, 0.92, 0.93 and 0.94  Officially obsoleted by 2.0
     // So, define constants for RSS 1.0, RSS 2.0 and ATOM
 
-    const RSS1 = 'RSS 1.0';
+    public const RSS1 = 'RSS 1.0';
 
-    const RSS2 = 'RSS 2.0';
+    public const RSS2 = 'RSS 2.0';
 
-    const ATOM = 'ATOM';
+    public const ATOM = 'ATOM';
 
-    const VERSION = '1.1.0';
+    public const VERSION = '1.1.0';
 
     /**
      * Collection of all channel elements
