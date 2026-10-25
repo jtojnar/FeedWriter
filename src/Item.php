@@ -97,18 +97,21 @@ class Item
     */
     public function addElement($elementName, $content, array $attributes = [], $overwrite = FALSE, $allowMultiple = FALSE)
     {
-        if (empty($elementName))
+        if (empty($elementName)) {
             throw new \InvalidArgumentException('The element name may not be empty or NULL.');
-        if (!is_string($elementName))
+        }
+        if (!is_string($elementName)) {
             throw new \InvalidArgumentException('The element name must be a string.');
+        }
 
         $key = $elementName;
 
         // return if element already exists & if overwriting is disabled
         // & if multiple elements are not allowed.
         if (isset($this->elements[$elementName]) && !$overwrite) {
-            if (!$allowMultiple)
+            if (!$allowMultiple) {
                 return $this;
+            }
 
             $key .= '-' . $this->cpt();
         }
@@ -149,19 +152,23 @@ class Item
         if ($this->version == Feed::ATOM) {
             // Add an 'id' element, if it was not added by calling the setLink method.
             // Use the value of the title element as key, since no link element was specified.
-            if (!array_key_exists('id', $this->elements))
+            if (!array_key_exists('id', $this->elements)) {
                 $this->setId(Feed::uuid($this->elements['title']['content'], 'urn:uuid:'));
+            }
 
             // Either a 'link' or 'content' element is needed.
-            if (!array_key_exists('content', $this->elements) && !array_key_exists('link', $this->elements))
+            if (!array_key_exists('content', $this->elements) && !array_key_exists('link', $this->elements)) {
                 throw new InvalidOperationException('ATOM feed entries need a link or a content element. Call the setLink or setContent method.');
+            }
         }
         // ...same with RSS1 feeds.
         elseif ($this->version == Feed::RSS1) {
-            if (!array_key_exists('title', $this->elements))
+            if (!array_key_exists('title', $this->elements)) {
                 throw new InvalidOperationException('RSS1 feed entries need a title element. Call the setTitle method.');
-            if (!array_key_exists('link', $this->elements))
+            }
+            if (!array_key_exists('link', $this->elements)) {
                 throw new InvalidOperationException('RSS1 feed entries need a link element. Call the setLink method.');
+            }
         }
 
         return $this->elements;
@@ -202,8 +209,9 @@ class Item
     */
     public function setContent($content)
     {
-        if ($this->version != Feed::ATOM)
+        if ($this->version != Feed::ATOM) {
             throw new InvalidOperationException('The content element is supported in ATOM feeds only.');
+        }
 
         return $this->addElement('content', $content, ['type' => 'html']);
     }
@@ -233,16 +241,18 @@ class Item
     public function setDate($date)
     {
         if (!is_numeric($date)) {
-            if ($date instanceof DateTime || $date instanceof DateTimeInterface)
+            if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
                 $date = $date->getTimestamp();
-            else {
+            } else {
                 $date = strtotime($date);
 
-                if ($date === FALSE)
+                if ($date === FALSE) {
                     throw new \InvalidArgumentException('The given date string was not parseable.');
+                }
             }
-        } elseif ($date < 0)
+        } elseif ($date < 0) {
             throw new \InvalidArgumentException('The given date is not an UNIX timestamp.');
+        }
 
         if ($this->version == Feed::ATOM) {
             $tag    = 'updated';
@@ -297,17 +307,20 @@ class Item
     */
     public function addEnclosure($url, $length, $type, $multiple = TRUE)
     {
-        if ($this->version == Feed::RSS1)
+        if ($this->version == Feed::RSS1) {
             throw new InvalidOperationException('Media attachment is not supported in RSS1 feeds.');
+        }
 
         // the length parameter should be set to 0 if it can't be determined
         // see http://www.rssboard.org/rss-profile#element-channel-item-enclosure
-        if (!is_numeric($length) || $length < 0)
+        if (!is_numeric($length) || $length < 0) {
             throw new \InvalidArgumentException('The length parameter must be an integer and greater or equals to zero.');
+        }
 
         // Regex used from RFC 4287, page 41
-        if (!is_string($type) || preg_match('/.+\/.+/', $type) != 1)
+        if (!is_string($type) || preg_match('/.+\/.+/', $type) != 1) {
             throw new \InvalidArgumentException('type parameter must be a string and a MIME type.');
+        }
 
         $attributes = ['length' => (string) $length, 'type' => $type];
 
@@ -336,26 +349,31 @@ class Item
     */
     public function setAuthor($author, $email = null, $uri = null)
     {
-        if ($this->version == Feed::RSS1)
+        if ($this->version == Feed::RSS1) {
             throw new InvalidOperationException('The author element is not supported in RSS1 feeds.');
+        }
 
         // Regex from RFC 4287 page 41
-        if ($email != null && preg_match('/.+@.+/', $email) != 1)
+        if ($email != null && preg_match('/.+@.+/', $email) != 1) {
             throw new \InvalidArgumentException('The email address is syntactically incorrect.');
+        }
 
         if ($this->version == Feed::RSS2) {
-            if ($email != null)
+            if ($email != null) {
                 $author = $email . ' (' . $author . ')';
+            }
 
             $this->addElement('author', $author);
         } else {
             $elements = ['name' => $author];
 
-            if ($email != null)
+            if ($email != null) {
                 $elements['email'] = $email;
+            }
 
-            if ($uri != null)
+            if ($uri != null) {
                 $elements['uri'] = $uri;
+            }
 
             $this->addElement('author', $elements);
         }
@@ -377,8 +395,9 @@ class Item
     public function setId($id, $permaLink = false)
     {
         if ($this->version == Feed::RSS2) {
-            if (!is_bool($permaLink))
+            if (!is_bool($permaLink)) {
                 throw new \InvalidArgumentException('The permaLink parameter must be boolean.');
+            }
 
             $permaLink = $permaLink ? 'true' : 'false';
 
@@ -391,18 +410,21 @@ class Item
             $found = FALSE;
             $checkId = strtolower($id);
 
-            foreach($validSchemes as $scheme)
+            foreach($validSchemes as $scheme) {
                 if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== FALSE) {
                     $found = TRUE;
                     break;
                 }
+            }
 
-            if (!$found)
+            if (!$found) {
                 throw new \InvalidArgumentException("The ID must begin with an IANA-registered URI scheme.");
+            }
 
             $this->addElement('id', $id, [], TRUE);
-        } else
+        } else {
             throw new InvalidOperationException('A unique ID is not supported in RSS1 feeds.');
+        }
 
         return $this;
     }

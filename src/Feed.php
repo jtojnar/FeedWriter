@@ -153,20 +153,25 @@ abstract class Feed
      */
     public function setPagination($nextURL = null, $previousURL = null, $firstURL = null, $lastURL = null)
     {
-        if (empty($nextURL) && empty($previousURL) && empty($firstURL) && empty($lastURL))
+        if (empty($nextURL) && empty($previousURL) && empty($firstURL) && empty($lastURL)) {
             throw new \LogicException('At least one URL must be specified for pagination to work.');
+        }
 
-        if (!empty($nextURL))
+        if (!empty($nextURL)) {
             $this->setAtomLink($nextURL, 'next');
+        }
 
-        if (!empty($previousURL))
+        if (!empty($previousURL)) {
             $this->setAtomLink($previousURL, 'previous');
+        }
 
-        if (!empty($firstURL))
+        if (!empty($firstURL)) {
             $this->setAtomLink($firstURL, 'first');
+        }
 
-        if (!empty($lastURL))
+        if (!empty($lastURL)) {
             $this->setAtomLink($lastURL, 'last');
+        }
 
         return $this;
     }
@@ -179,12 +184,13 @@ abstract class Feed
     */
     public function addGenerator()
     {
-        if ($this->version == Feed::ATOM)
+        if ($this->version == Feed::ATOM) {
             $this->setChannelElement('atom:generator', 'FeedWriter', ['uri' => 'https://github.com/mibe/FeedWriter']);
-        elseif ($this->version == Feed::RSS2)
+        } elseif ($this->version == Feed::RSS2) {
             $this->setChannelElement('generator', 'FeedWriter');
-        else
+        } else {
             throw new InvalidOperationException('The generator element is not supported in RSS1 feeds.');
+        }
 
         return $this;
     }
@@ -201,10 +207,12 @@ abstract class Feed
     */
     public function addNamespace($prefix, $uri)
     {
-        if (empty($prefix))
+        if (empty($prefix)) {
             throw new \InvalidArgumentException('The prefix may not be emtpy or NULL.');
-        if (empty($uri))
+        }
+        if (empty($uri)) {
             throw new \InvalidArgumentException('The uri may not be empty or NULL.');
+        }
 
         $this->namespaces[$prefix] = $uri;
 
@@ -223,18 +231,21 @@ abstract class Feed
     */
     public function setChannelElement($elementName, $content, array $attributes = [], $multiple = false)
     {
-        if (empty($elementName))
+        if (empty($elementName)) {
             throw new \InvalidArgumentException('The element name may not be empty or NULL.');
-        if (!is_string($elementName))
+        }
+        if (!is_string($elementName)) {
             throw new \InvalidArgumentException('The element name must be a string.');
+        }
 
         $entity['content'] = $content;
         $entity['attributes'] = $attributes;
 
-        if ($multiple === TRUE)
+        if ($multiple === TRUE) {
             $this->channels[$elementName][] = $entity;
-        else
+        } else {
             $this->channels[$elementName] = [$entity];
+        }
 
         return $this;
     }
@@ -288,8 +299,9 @@ abstract class Feed
     */
     public function printFeed($useGenericContentType = false)
     {
-        if (!is_bool($useGenericContentType))
+        if (!is_bool($useGenericContentType)) {
             throw new \InvalidArgumentException('The useGenericContentType parameter must be boolean.');
+        }
 
         $contentType = "text/xml";
 
@@ -311,8 +323,9 @@ abstract class Feed
     */
     public function generateFeed()
     {
-        if ($this->version != Feed::ATOM && !array_key_exists('link', $this->channels))
+        if ($this->version != Feed::ATOM && !array_key_exists('link', $this->channels)) {
             throw new InvalidOperationException('RSS1 & RSS2 feeds need a link element. Call the setLink method before this method.');
+        }
 
         return $this->makeHeader()
             . $this->makeChannels()
@@ -397,10 +410,12 @@ abstract class Feed
     */
     public function setEncoding($encoding)
     {
-        if (empty($encoding))
+        if (empty($encoding)) {
             throw new \InvalidArgumentException('The encoding may not be empty or NULL.');
-        if (!is_string($encoding))
+        }
+        if (!is_string($encoding)) {
             throw new \InvalidArgumentException('The encoding must be a string.');
+        }
 
         $this->encoding = $encoding;
 
@@ -416,8 +431,9 @@ abstract class Feed
     */
     public function setTitle($title)
     {
-        if (empty($title))
+        if (empty($title)) {
             throw new \InvalidArgumentException('The title may not be empty or NULL.');
+        }
 
         return $this->setChannelElement('title', $title);
     }
@@ -438,29 +454,33 @@ abstract class Feed
     */
     public function setDate($date)
     {
-        if ($this->version == Feed::RSS1)
+        if ($this->version == Feed::RSS1) {
             throw new InvalidOperationException('The publication date is not supported in RSS1 feeds.');
+        }
 
         // The feeds have different date formats.
         $format = $this->version == Feed::ATOM ? \DATE_ATOM : \DATE_RSS;
 
-        if ($date instanceof DateTime || $date instanceof DateTimeInterface)
+        if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
             $date = $date->format($format);
-        elseif(is_numeric($date) && $date >= 0)
+        } elseif(is_numeric($date) && $date >= 0) {
             $date = date($format, $date);
-        elseif (is_string($date)) {
+        } elseif (is_string($date)) {
             $timestamp = strtotime($date);
-            if ($timestamp === FALSE)
+            if ($timestamp === FALSE) {
                 throw new \InvalidArgumentException('The given date was not parseable.');
+            }
 
             $date = date($format, $timestamp);
-        } else
+        } else {
             throw new \InvalidArgumentException('The given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.');
+        }
 
-        if ($this->version == Feed::ATOM)
+        if ($this->version == Feed::ATOM) {
             $this->setChannelElement('updated', $date);
-        else
+        } else {
             $this->setChannelElement('lastBuildDate', $date);
+        }
 
         return $this;
     }
@@ -474,13 +494,15 @@ abstract class Feed
     */
     public function setDescription($description)
     {
-        if (empty($description))
+        if (empty($description)) {
             throw new \InvalidArgumentException('The description may not be empty or NULL.');
+        }
 
-        if ($this->version != Feed::ATOM)
+        if ($this->version != Feed::ATOM) {
             $this->setChannelElement('description', $description);
-        else
+        } else {
             $this->setChannelElement('subtitle', $description);
+        }
 
         return $this;
     }
@@ -494,13 +516,15 @@ abstract class Feed
     */
     public function setLink($link)
     {
-        if (empty($link))
+        if (empty($link)) {
             throw new \InvalidArgumentException('The link may not be empty or NULL.');
+        }
 
-        if ($this->version == Feed::ATOM)
+        if ($this->version == Feed::ATOM) {
             $this->setAtomLink($link);
-        else
+        } else {
             $this->setChannelElement('link', $link);
+        }
 
         return $this;
     }
@@ -528,34 +552,39 @@ abstract class Feed
         $data = ['href' => $href];
 
         if ($rel != null) {
-            if (!is_string($rel) || empty($rel))
+            if (!is_string($rel) || empty($rel)) {
                 throw new \InvalidArgumentException('rel parameter must be a string and a valid relation identifier.');
+            }
 
             $data['rel'] = $rel;
         }
         if ($type != null) {
             // Regex used from RFC 4287, page 41
-            if (!is_string($type) || preg_match('/.+\/.+/', $type) != 1)
+            if (!is_string($type) || preg_match('/.+\/.+/', $type) != 1) {
                 throw new \InvalidArgumentException('type parameter must be a string and a MIME type.');
+            }
 
             $data['type'] = $type;
         }
         if ($hreflang != null) {
             // Regex used from RFC 4287, page 41
-            if (!is_string($hreflang) || preg_match('/[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*/', $hreflang) != 1)
+            if (!is_string($hreflang) || preg_match('/[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*/', $hreflang) != 1) {
                 throw new \InvalidArgumentException('hreflang parameter must be a string and a valid language code.');
+            }
 
             $data['hreflang'] = $hreflang;
         }
         if ($title != null) {
-            if (!is_string($title) || empty($title))
+            if (!is_string($title) || empty($title)) {
                 throw new \InvalidArgumentException('title parameter must be a string and not empty.');
+            }
 
             $data['title'] = $title;
         }
         if ($length != null) {
-            if (!is_int($length) || $length < 0)
+            if (!is_int($length) || $length < 0) {
                 throw new \InvalidArgumentException('length parameter must be a positive integer.');
+            }
 
             $data['length'] = (string) $length;
         }
@@ -564,16 +593,18 @@ abstract class Feed
         // See RFC 4287, page 12 (4.1.1)
         if ($this->version == Feed::ATOM) {
             foreach ($this->channels as $key => $value) {
-                if ($key != 'atom:link')
+                if ($key != 'atom:link') {
                     continue;
+                }
 
                 // $value is an array , so check every element
                 foreach ($value as $linkItem) {
                     $attrib = $linkItem['attributes'];
                     // Only one link with relation alternate and same hreflang & type is allowed.
-                    if (@$attrib['rel'] == 'alternate' && @$attrib['hreflang'] == $hreflang && @$attrib['type'] == $type)
+                    if (@$attrib['rel'] == 'alternate' && @$attrib['hreflang'] == $hreflang && @$attrib['type'] == $type) {
                         throw new InvalidOperationException('The feed must not contain more than one link element with a'
                         . ' relation of "alternate" that has the same combination of type and hreflang attribute values.');
+                    }
                 }
             }
         }
@@ -606,15 +637,18 @@ abstract class Feed
     */
     public function setImage($url, $title = null, $link = null)
     {
-        if (!is_string($url) || empty($url))
+        if (!is_string($url) || empty($url)) {
             throw new \InvalidArgumentException('url parameter must be a string and may not be empty or NULL.');
+        }
 
         // RSS feeds have support for a title & link element.
         if ($this->version != Feed::ATOM) {
-            if (!is_string($title) || empty($title))
+            if (!is_string($title) || empty($title)) {
                 throw new \InvalidArgumentException('title parameter must be a string and may not be empty or NULL.');
-            if (!is_string($link) || empty($link))
+            }
+            if (!is_string($link) || empty($link)) {
                 throw new \InvalidArgumentException('link parameter must be a string and may not be empty or NULL.');
+            }
 
             $data = ['title'=>$title, 'link'=>$link, 'url'=>$url];
             $name = 'image';
@@ -627,8 +661,9 @@ abstract class Feed
         if ($this->version == Feed::RSS1) {
             $this->data['Image'] = $data;
             return $this->setChannelElement($name, '', ['rdf:resource' => $url], false);
-        } else
+        } else {
             return $this->setChannelElement($name, $data);
+        }
     }
 
     /**
@@ -641,12 +676,15 @@ abstract class Feed
     */
     public function setChannelAbout($url)
     {
-        if ($this->version != Feed::RSS1)
+        if ($this->version != Feed::RSS1) {
             throw new InvalidOperationException("This method is only supported in RSS1 feeds.");
-        if (empty($url))
+        }
+        if (empty($url)) {
             throw new \InvalidArgumentException('The about URL may not be empty or NULL.');
-        if (!is_string($url))
+        }
+        if (!is_string($url)) {
             throw new \InvalidArgumentException('The about URL must be a string.');
+        }
 
         $this->data['ChannelAbout'] = $url;
 
@@ -694,12 +732,14 @@ abstract class Feed
 
         // Did the PCRE replace failed because of bad UTF-8 data?
         // If yes, try a non-multibyte regex and without the UTF-8 mode enabled.
-        if ($result == NULL && preg_last_error() == PREG_BAD_UTF8_ERROR)
+        if ($result == NULL && preg_last_error() == PREG_BAD_UTF8_ERROR) {
             $result = preg_replace('/[^\x09\x0a\x0d\x20-\xFF]+/', $replacement, $string);
+        }
 
         // In case the regex replacing failed completely, return the whole unfiltered string.
-        if ($result == NULL)
+        if ($result == NULL) {
             $result = $string;
+        }
 
         return $result;
     }
@@ -735,8 +775,9 @@ abstract class Feed
         foreach ($tags as $tag) {
             $elements = explode(':', $tag);
 
-            if (count($elements) != 2)
+            if (count($elements) != 2) {
                 continue;
+            }
 
             $prefixes[] = $elements[0];
         }
@@ -778,16 +819,18 @@ abstract class Feed
 
         // Iterate through every namespace prefix and add it to the element attributes.
         foreach ($prefixes as $prefix) {
-            if (!isset($this->namespaces[$prefix]))
+            if (!isset($this->namespaces[$prefix])) {
                 throw new InvalidOperationException('Unknown XML namespace prefix: \'' . $prefix . '\'.'
                     . ' Use the addNamespace method to add support for this prefix.');
-            else
+            } else {
                 $attributes['xmlns:' . $prefix] = $this->namespaces[$prefix];
+            }
         }
 
         // Include default namepsace, if required
-        if (!empty($defaultNamespace))
+        if (!empty($defaultNamespace)) {
             $attributes['xmlns'] = $defaultNamespace;
+        }
 
         $out .= $this->makeNode($tagName, '', $attributes, true);
 
@@ -860,8 +903,9 @@ abstract class Feed
 
         $nodeText .= (in_array($tagName, $this->CDATAEncoding)) ? ']]>' : '';
 
-        if (!$omitEndTag)
+        if (!$omitEndTag) {
             $nodeText .= "</$tagName>";
+        }
 
         $nodeText .= PHP_EOL;
 
@@ -911,8 +955,9 @@ abstract class Feed
             $out .= "</rdf:Seq>" . PHP_EOL . "</items>" . PHP_EOL . "</channel>" . PHP_EOL;
 
             // An image has its own element after the channel elements.
-            if (array_key_exists('Image', $this->data))
+            if (array_key_exists('Image', $this->data)) {
                 $out .= $this->makeNode('image', $this->data['Image'], ['rdf:about' => $this->data['Image']['url']]);
+            }
         } elseif ($this->version == Feed::ATOM) {
             // ATOM feeds have a unique feed ID. Use the title channel element as key.
             $out .= $this->makeNode('id', Feed::uuid($this->channels['title'][0]['content'], 'urn:uuid:'));
@@ -935,18 +980,20 @@ abstract class Feed
 
             // The argument is printed as rdf:about attribute of item in RSS 1.0
             // We're using the link set in the item (which is mandatory) as the about attribute.
-            if ($this->version == Feed::RSS1)
+            if ($this->version == Feed::RSS1) {
                 $out .= $this->startItem($thisItems['link']['content']);
-            else
+            } else {
                 $out .= $this->startItem();
+            }
 
             foreach ($thisItems as $feedItem) {
                 $name = $feedItem['name'];
 
                 // Strip all ATOM namespace prefixes from tags when feed is an ATOM feed.
                 // Not needed here, because the ATOM namespace name is used as default namespace.
-                if ($this->version == Feed::ATOM && strncmp($name, 'atom', 4) == 0)
+                if ($this->version == Feed::ATOM && strncmp($name, 'atom', 4) == 0) {
                     $name = substr($name, 5);
+                }
 
                 $out .= $this->makeNode($name, $feedItem['content'], $feedItem['attributes']);
             }
