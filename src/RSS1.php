@@ -26,9 +26,6 @@ namespace FeedWriter;
  */
 class RSS1 extends Feed
 {
-    /**
-    * {@inheritdoc}
-    */
     public function __construct()
     {
         parent::__construct(Feed::RSS1);
