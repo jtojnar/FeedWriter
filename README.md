@@ -8,7 +8,7 @@ Once a feed is fully composed with its items, the feed class can generate the ne
 
 ## Requirements
 
-- PHP 5.3 or higher
+- PHP 7.4 or higher
 
 ## Installation  
 You can install via [Composer](https://getcomposer.org/).  
