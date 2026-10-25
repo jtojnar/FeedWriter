@@ -245,7 +245,7 @@ class Item
     public function setDate($date)
     {
         if (!is_numeric($date)) {
-            if ($date instanceof DateTimeInterface || $date instanceof DateTime)
+            if ($date instanceof DateTime || $date instanceof DateTimeInterface)
                 $date = $date->getTimestamp();
             else {
                 $date = strtotime($date);

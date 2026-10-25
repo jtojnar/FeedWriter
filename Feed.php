@@ -460,7 +460,7 @@ abstract class Feed
         // The feeds have different date formats.
         $format = $this->version == Feed::ATOM ? \DATE_ATOM : \DATE_RSS;
 
-        if ($date instanceof DateTimeInterface || $date instanceof DateTime)
+        if ($date instanceof DateTime || $date instanceof DateTimeInterface)
             $date = $date->format($format);
         else if(is_numeric($date) && $date >= 0)
             $date = date($format, $date);
