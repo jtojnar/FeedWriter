@@ -93,7 +93,7 @@ class Item
     * @return   self
     * @throws   \InvalidArgumentException if the element name is not a string, empty or NULL.
     */
-    public function addElement($elementName, $content, array $attributes = [], $overwrite = FALSE, $allowMultiple = FALSE)
+    public function addElement($elementName, $content, array $attributes = [], $overwrite = false, $allowMultiple = false)
     {
         if (empty($elementName)) {
             throw new \InvalidArgumentException('The element name may not be empty or NULL.');
@@ -244,7 +244,7 @@ class Item
             } else {
                 $date = strtotime($date);
 
-                if ($date === FALSE) {
+                if ($date === false) {
                     throw new \InvalidArgumentException('The given date string was not parseable.');
                 }
             }
@@ -303,7 +303,7 @@ class Item
     * @throws   \InvalidArgumentException if the length or type parameter is invalid.
     * @throws   InvalidOperationException if this method is called on RSS1 feeds.
     */
-    public function addEnclosure($url, $length, $type, $multiple = TRUE)
+    public function addEnclosure($url, $length, $type, $multiple = true)
     {
         if ($this->version == Feed::RSS1) {
             throw new InvalidOperationException('Media attachment is not supported in RSS1 feeds.');
@@ -324,11 +324,11 @@ class Item
 
         if ($this->version == Feed::RSS2) {
             $attributes['url'] = $url;
-            $this->addElement('enclosure', '', $attributes, FALSE, $multiple);
+            $this->addElement('enclosure', '', $attributes, false, $multiple);
         } else {
             $attributes['href'] = $url;
             $attributes['rel'] = 'enclosure';
-            $this->addElement('atom:link', '', $attributes, FALSE, $multiple);
+            $this->addElement('atom:link', '', $attributes, false, $multiple);
         }
 
         return $this;
@@ -405,12 +405,12 @@ class Item
             // The list of valid schemes was generated from http://www.iana.org/assignments/uri-schemes
             // by using only permanent or historical schemes.
             $validSchemes = ['aaa', 'aaas', 'about', 'acap', 'acct', 'bb', 'cap', 'cid', 'coap', 'coap+tcp', 'coap+ws', 'coaps', 'coaps+tcp', 'coaps+ws', 'crid', 'data', 'dav', 'dict', 'dns', 'drop', 'dtn', 'example', 'fax', 'file', 'filesystem', 'ftp', 'geo', 'go', 'gopher', 'grd', 'h323', 'http', 'https', 'iax', 'icap', 'im', 'imap', 'info', 'ipn', 'ipp', 'ipps', 'iris', 'iris.beep', 'iris.lwz', 'iris.xpc', 'iris.xpcs', 'jabber', 'ldap', 'leaptofrogans', 'mailserver', 'mailto', 'mid', 'modem', 'msrp', 'msrps', 'mt', 'mtqp', 'mupdate', 'news', 'nfs', 'ni', 'nih', 'nntp', 'opaquelocktoken', 'p1', 'pack', 'pkcs11', 'pop', 'pres', 'prospero', 'reload', 'rtsp', 'rtsps', 'rtspu', 'service', 'session', 'shttp (OBSOLETE)', 'sieve', 'sip', 'sips', 'sms', 'snews', 'snmp', 'soap.beep', 'soap.beeps', 'stun', 'stuns', 'tag', 'tel', 'telnet', 'tftp', 'thismessage', 'tip', 'tn3270', 'turn', 'turns', 'tv', 'upt', 'urn', 'vemmi', 'videotex', 'vnc', 'wais', 'wpid', 'ws', 'wss', 'xcon', 'xcon-userid', 'xmlrpc.beep', 'xmlrpc.beeps', 'xmpp', 'z39.50', 'z39.50r', 'z39.50s'];
-            $found = FALSE;
+            $found = false;
             $checkId = strtolower($id);
 
             foreach ($validSchemes as $scheme) {
-                if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== FALSE) {
-                    $found = TRUE;
+                if (strrpos($checkId, $scheme . ':', -strlen($checkId)) !== false) {
+                    $found = true;
                     break;
                 }
             }
@@ -419,7 +419,7 @@ class Item
                 throw new \InvalidArgumentException('The ID must begin with an IANA-registered URI scheme.');
             }
 
-            $this->addElement('id', $id, [], TRUE);
+            $this->addElement('id', $id, [], true);
         } else {
             throw new InvalidOperationException('A unique ID is not supported in RSS1 feeds.');
         }

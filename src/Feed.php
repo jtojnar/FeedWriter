@@ -241,7 +241,7 @@ abstract class Feed
         $entity['content'] = $content;
         $entity['attributes'] = $attributes;
 
-        if ($multiple === TRUE) {
+        if ($multiple === true) {
             $this->channels[$elementName][] = $entity;
         } else {
             $this->channels[$elementName] = [$entity];
@@ -467,7 +467,7 @@ abstract class Feed
             $date = date($format, $date);
         } elseif (is_string($date)) {
             $timestamp = strtotime($date);
-            if ($timestamp === FALSE) {
+            if ($timestamp === false) {
                 throw new \InvalidArgumentException('The given date was not parseable.');
             }
 
@@ -733,12 +733,12 @@ abstract class Feed
 
         // Did the PCRE replace failed because of bad UTF-8 data?
         // If yes, try a non-multibyte regex and without the UTF-8 mode enabled.
-        if ($result == NULL && preg_last_error() == PREG_BAD_UTF8_ERROR) {
+        if ($result == null && preg_last_error() == PREG_BAD_UTF8_ERROR) {
             $result = preg_replace('/[^\x09\x0a\x0d\x20-\xFF]+/', $replacement, $string);
         }
 
         // In case the regex replacing failed completely, return the whole unfiltered string.
-        if ($result == NULL) {
+        if ($result == null) {
             $result = $string;
         }
 
