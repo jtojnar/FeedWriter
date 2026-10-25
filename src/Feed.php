@@ -100,7 +100,7 @@ abstract class Feed
      *
      * @var Feed::RSS1|Feed::RSS2|Feed::ATOM
      */
-    private $version = null;
+    private $version;
 
     /**
      * Contains the encoding of this feed.
