@@ -6,7 +6,7 @@
 namespace FeedWriter;
 
 /**
- * Wrapper for creating ATOM feeds
+ * Wrapper for creating ATOM feeds.
  */
 class ATOM extends Feed
 {

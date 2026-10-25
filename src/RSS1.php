@@ -6,7 +6,7 @@
 namespace FeedWriter;
 
 /**
- * Wrapper for creating RSS1 feeds
+ * Wrapper for creating RSS1 feeds.
  */
 class RSS1 extends Feed
 {
