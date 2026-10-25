@@ -855,7 +855,7 @@ abstract class Feed
     * @return   string  formatted xml tag
     * @throws   \InvalidArgumentException if the tagContent is not an array and not a string.
     */
-    private function makeNode($tagName, $tagContent, array $attributes = null, $omitEndTag = false)
+    private function makeNode($tagName, $tagContent, $attributes = null, $omitEndTag = false)
     {
         $nodeText = '';
         $attrText = '';
