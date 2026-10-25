@@ -67,7 +67,7 @@ $TestFeed->addItem($newItem);
 //Adding multiple elements from array
 //Elements which have an attribute cannot be added by this way
 $newItem = $TestFeed->createNewItem();
-$newItem->addElementArray(array('title'=>'The 2nd feed', 'link'=>'http://www.google.com', 'description'=>'This is a test of the FeedWriter class'));
+$newItem->addElementArray(['title'=>'The 2nd feed', 'link'=>'http://www.google.com', 'description'=>'This is a test of the FeedWriter class']);
 $TestFeed->addItem($newItem);
 
 //OK. Everything is done. Now generate the feed.

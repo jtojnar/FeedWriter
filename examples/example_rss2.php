@@ -59,7 +59,7 @@ $TestFeed->setChannelElement('pubDate', date(\DATE_RSS, strtotime('2013-04-06'))
 //      <day>Sunday</day>
 // </skipDays>
 // Thanks to - Peter Fargaš <peter.fargas.work@googlemail.com>
-$TestFeed->setChannelElement('skipDays', array('day'=>['Saturday','Sunday']));
+$TestFeed->setChannelElement('skipDays', ['day'=>['Saturday','Sunday']]);
 
 // You can add additional link elements, e.g. to a PubSubHubbub server with custom relations.
 // It's recommended to provide a backlink to the feed URL.
@@ -109,7 +109,7 @@ $newItem->setId('http://example.com/URL/to/article', true);
 // Use the addElement() method for other optional elements.
 // This here will add the 'source' element. The second parameter is the value of the element
 // and the third is an array containing the element attributes.
-$newItem->addElement('source', 'Mike\'s page', array('url' => 'http://www.example.com'));
+$newItem->addElement('source', 'Mike\'s page', ['url' => 'http://www.example.com']);
 
 // Now add the feed item to the main feed.
 $TestFeed->addItem($newItem);
@@ -117,7 +117,7 @@ $TestFeed->addItem($newItem);
 // Another method to add feed items is by using an array which contains key-value pairs
 // of every item element. Elements which have attributes cannot be added by this way.
 $newItem = $TestFeed->createNewItem();
-$newItem->addElementArray(array('title'=> 'The 2nd item', 'link' => 'http://www.google.com', 'description' => 'Just another test.'));
+$newItem->addElementArray(['title'=> 'The 2nd item', 'link' => 'http://www.google.com', 'description' => 'Just another test.']);
 $TestFeed->addItem($newItem);
 
 // OK. Everything is done. Now generate the feed.

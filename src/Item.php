@@ -48,7 +48,7 @@ class Item
     *
     * @var array<string, Element>
     */
-    private $elements = array();
+    private $elements = [];
 
     /**
     * Contains the format of this feed.
@@ -207,7 +207,7 @@ class Item
         if ($this->version != Feed::ATOM)
             throw new InvalidOperationException('The content element is supported in ATOM feeds only.');
 
-        return $this->addElement('content', $content, array('type' => 'html'));
+        return $this->addElement('content', $content, ['type' => 'html']);
     }
 
     /**
@@ -271,7 +271,7 @@ class Item
         if ($this->version == Feed::RSS2 || $this->version == Feed::RSS1) {
             $this->addElement('link', $link);
         } else {
-            $this->addElement('link','',array('href'=>$link));
+            $this->addElement('link','',['href'=>$link]);
             $this->setId(Feed::uuid($link,'urn:uuid:'));
         }
 
@@ -311,7 +311,7 @@ class Item
         if (!is_string($type) || preg_match('/.+\/.+/', $type) != 1)
             throw new \InvalidArgumentException('type parameter must be a string and a MIME type.');
 
-        $attributes = array('length' => (string) $length, 'type' => $type);
+        $attributes = ['length' => (string) $length, 'type' => $type];
 
         if ($this->version == Feed::RSS2) {
             $attributes['url'] = $url;
@@ -354,7 +354,7 @@ class Item
         }
         else
         {
-            $elements = array('name' => $author);
+            $elements = ['name' => $author];
 
             if ($email != null)
                 $elements['email'] = $email;
@@ -387,12 +387,12 @@ class Item
 
             $permaLink = $permaLink ? 'true' : 'false';
 
-            $this->addElement('guid', $id, array('isPermaLink' => $permaLink));
+            $this->addElement('guid', $id, ['isPermaLink' => $permaLink]);
         } elseif ($this->version == Feed::ATOM) {
             // Check if the given ID is an valid URI scheme (see RFC 4287 4.2.6)
             // The list of valid schemes was generated from http://www.iana.org/assignments/uri-schemes
             // by using only permanent or historical schemes.
-            $validSchemes = array('aaa', 'aaas', 'about', 'acap', 'acct', 'bb', 'cap', 'cid', 'coap', 'coap+tcp', 'coap+ws', 'coaps', 'coaps+tcp', 'coaps+ws', 'crid', 'data', 'dav', 'dict', 'dns', 'drop', 'dtn', 'example', 'fax', 'file', 'filesystem', 'ftp', 'geo', 'go', 'gopher', 'grd', 'h323', 'http', 'https', 'iax', 'icap', 'im', 'imap', 'info', 'ipn', 'ipp', 'ipps', 'iris', 'iris.beep', 'iris.lwz', 'iris.xpc', 'iris.xpcs', 'jabber', 'ldap', 'leaptofrogans', 'mailserver', 'mailto', 'mid', 'modem', 'msrp', 'msrps', 'mt', 'mtqp', 'mupdate', 'news', 'nfs', 'ni', 'nih', 'nntp', 'opaquelocktoken', 'p1', 'pack', 'pkcs11', 'pop', 'pres', 'prospero', 'reload', 'rtsp', 'rtsps', 'rtspu', 'service', 'session', 'shttp (OBSOLETE)', 'sieve', 'sip', 'sips', 'sms', 'snews', 'snmp', 'soap.beep', 'soap.beeps', 'stun', 'stuns', 'tag', 'tel', 'telnet', 'tftp', 'thismessage', 'tip', 'tn3270', 'turn', 'turns', 'tv', 'upt', 'urn', 'vemmi', 'videotex', 'vnc', 'wais', 'wpid', 'ws', 'wss', 'xcon', 'xcon-userid', 'xmlrpc.beep', 'xmlrpc.beeps', 'xmpp', 'z39.50', 'z39.50r', 'z39.50s');
+            $validSchemes = ['aaa', 'aaas', 'about', 'acap', 'acct', 'bb', 'cap', 'cid', 'coap', 'coap+tcp', 'coap+ws', 'coaps', 'coaps+tcp', 'coaps+ws', 'crid', 'data', 'dav', 'dict', 'dns', 'drop', 'dtn', 'example', 'fax', 'file', 'filesystem', 'ftp', 'geo', 'go', 'gopher', 'grd', 'h323', 'http', 'https', 'iax', 'icap', 'im', 'imap', 'info', 'ipn', 'ipp', 'ipps', 'iris', 'iris.beep', 'iris.lwz', 'iris.xpc', 'iris.xpcs', 'jabber', 'ldap', 'leaptofrogans', 'mailserver', 'mailto', 'mid', 'modem', 'msrp', 'msrps', 'mt', 'mtqp', 'mupdate', 'news', 'nfs', 'ni', 'nih', 'nntp', 'opaquelocktoken', 'p1', 'pack', 'pkcs11', 'pop', 'pres', 'prospero', 'reload', 'rtsp', 'rtsps', 'rtspu', 'service', 'session', 'shttp (OBSOLETE)', 'sieve', 'sip', 'sips', 'sms', 'snews', 'snmp', 'soap.beep', 'soap.beeps', 'stun', 'stuns', 'tag', 'tel', 'telnet', 'tftp', 'thismessage', 'tip', 'tn3270', 'turn', 'turns', 'tv', 'upt', 'urn', 'vemmi', 'videotex', 'vnc', 'wais', 'wpid', 'ws', 'wss', 'xcon', 'xcon-userid', 'xmlrpc.beep', 'xmlrpc.beeps', 'xmpp', 'z39.50', 'z39.50r', 'z39.50s'];
             $found = FALSE;
             $checkId = strtolower($id);
 

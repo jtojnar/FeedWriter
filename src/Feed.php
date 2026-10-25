@@ -63,14 +63,14 @@ abstract class Feed
     *
     * @var array<string, array<Element>>
     */
-    private $channels      = array();
+    private $channels      = [];
 
     /**
     * Collection of items as object of \FeedWriter\Item class.
     *
     * @var Item[]
     */
-    private $items         = array();
+    private $items         = [];
 
     /**
     * Collection of other version wise data.
@@ -79,21 +79,21 @@ abstract class Feed
     *
     * @var array{Image?: string|array{title: string, link: string, url: string}, ChannelAbout?: string}
     */
-    private $data          = array();
+    private $data          = [];
 
     /**
     * The tag names which have to encoded as CDATA
     *
     * @var string[]
     */
-    private $CDATAEncoding = array();
+    private $CDATAEncoding = [];
 
     /**
     * Collection of XML namespaces
     *
     * @var array<string, string>
     */
-    private $namespaces    = array();
+    private $namespaces    = [];
 
     /**
     * Contains the format of this feed.
@@ -133,7 +133,7 @@ abstract class Feed
         $this->namespaces['sy'] = 'http://purl.org/rss/1.0/modules/syndication/';
 
         // Tag names to encode in CDATA
-        $this->addCDATAEncoding(array('description', 'content:encoded', 'summary'));
+        $this->addCDATAEncoding(['description', 'content:encoded', 'summary']);
     }
 
     // Start # public functions ---------------------------------------------
@@ -180,7 +180,7 @@ abstract class Feed
     public function addGenerator()
     {
         if ($this->version == Feed::ATOM)
-            $this->setChannelElement('atom:generator', 'FeedWriter', array('uri' => 'https://github.com/mibe/FeedWriter'));
+            $this->setChannelElement('atom:generator', 'FeedWriter', ['uri' => 'https://github.com/mibe/FeedWriter']);
         else if ($this->version == Feed::RSS2)
             $this->setChannelElement('generator', 'FeedWriter');
         else
@@ -528,7 +528,7 @@ abstract class Feed
     */
     public function setAtomLink($href, $rel = null, $type = null, $hreflang = null, $title = null, $length = null)
     {
-        $data = array('href' => $href);
+        $data = ['href' => $href];
 
         if ($rel != null) {
             if (!is_string($rel) || empty($rel))
@@ -620,7 +620,7 @@ abstract class Feed
             if (!is_string($link) || empty($link))
                 throw new \InvalidArgumentException('link parameter must be a string and may not be empty or NULL.');
 
-            $data = array('title'=>$title, 'link'=>$link, 'url'=>$url);
+            $data = ['title'=>$title, 'link'=>$link, 'url'=>$url];
             $name = 'image';
         }
         else
@@ -633,7 +633,7 @@ abstract class Feed
         if ($this->version == Feed::RSS1)
         {
             $this->data['Image'] = $data;
-            return $this->setChannelElement($name, '', array('rdf:resource' => $url), false);
+            return $this->setChannelElement($name, '', ['rdf:resource' => $url], false);
         }
         else
             return $this->setChannelElement($name, $data);
@@ -725,7 +725,7 @@ abstract class Feed
     */
     private function getNamespacePrefixes()
     {
-        $prefixes = array();
+        $prefixes = [];
 
         // Get all tag names from channel elements...
         $tags = array_keys($this->channels);
@@ -763,7 +763,7 @@ abstract class Feed
         $out = '<?xml version="1.0" encoding="'.$this->encoding.'" ?>' . PHP_EOL;
 
         $prefixes = $this->getNamespacePrefixes();
-        $attributes = array();
+        $attributes = [];
         $tagName = '';
         $defaultNamespace = '';
 
@@ -920,7 +920,7 @@ abstract class Feed
 
             // An image has its own element after the channel elements.
             if (array_key_exists('Image', $this->data))
-                $out .= $this->makeNode('image', $this->data['Image'], array('rdf:about' => $this->data['Image']['url']));
+                $out .= $this->makeNode('image', $this->data['Image'], ['rdf:about' => $this->data['Image']['url']]);
         } else if ($this->version == Feed::ATOM) {
             // ATOM feeds have a unique feed ID. Use the title channel element as key.
             $out .= $this->makeNode('id', Feed::uuid($this->channels['title'][0]['content'], 'urn:uuid:'));

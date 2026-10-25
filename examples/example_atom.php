@@ -44,7 +44,7 @@ $TestFeed->setDate(new DateTime());
 $TestFeed->setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/CommaFeed.svg/256px-CommaFeed.svg.png');
 
 //For other channel elements, use setChannelElement() function
-$TestFeed->setChannelElement('author', array('name'=>'Anis uddin Ahmad'));
+$TestFeed->setChannelElement('author', ['name'=>'Anis uddin Ahmad']);
 
 //You can add additional link elements, e.g. to a PubSubHubbub server with custom relations.
 $TestFeed->setSelfLink('http://example.com/myfeed');
